@@ -28,9 +28,7 @@ public class Client {
 		this.phone = phone;
 	}
 
-	/*
-	 *  Email-Password Constructor
-	 */
+	
 
 	public Client(String email, String password) {
 		this.email = email;
