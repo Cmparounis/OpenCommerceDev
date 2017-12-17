@@ -12,7 +12,7 @@ public class Category {
 		this.name = name;
 	}
 
-	/*Getters and Setters*/
+	/*G's and S's*/
 
 	public String getId() {
 		return id;
