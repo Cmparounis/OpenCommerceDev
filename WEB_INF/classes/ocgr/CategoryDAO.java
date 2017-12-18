@@ -43,5 +43,32 @@ public class CategoryDAO {
 		}
 	}
 
+	public Category getCategorybyId(String id) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT * FROM ocgr_categories WHERE category_id = ?;";
+		DB db = new DB();
+		Category currentCategory = null ;
+
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			stmt.setString(1, id );
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()){
+				currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
+			}
+			stmt.close();
+			db.close();
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
+		return currentCategory;
+	}
 
 }
