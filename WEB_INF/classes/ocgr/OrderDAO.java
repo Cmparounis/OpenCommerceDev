@@ -15,7 +15,6 @@ import java.util.Set;
 
 public class OrderDAO {
 
-
 	public static void main(String args[]) {
 
 		BigDecimal big = new BigDecimal(12.56);
@@ -47,7 +46,7 @@ public class OrderDAO {
 	/**
 	 * This method returns a List with all Orders
 	 *
-	 * @return List<Order>
+	 * @return ArrayList<Order>, the Order Object
 	 */
 	public List<Order> getOrders() throws Exception {
 
@@ -156,9 +155,9 @@ public class OrderDAO {
 	 * This method finds an Order using the client given
 	 *
 	 * @param Client, the Client object
-	 * @return Order, the Order object
+	 * @return List<Order>, the Order object
 	 */
-	public Order getOrderByClient(Client client) throws Exception {
+	public List<Order> getOrderByClient(Client client) throws Exception {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -167,6 +166,8 @@ public class OrderDAO {
 
 		DB db = new DB();
 
+		List<Order> orders = new ArrayList<Order>();
+		
 		try {
 			db.open();
 			con = db.getConnection();
@@ -174,27 +175,22 @@ public class OrderDAO {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1,client.getId() );
 			rs = stmt.executeQuery();
-
-			if (!rs.next()) {
-				rs.close();
-				stmt.close();
-				db.close();
-
-				throw new Exception("Not valid Order_id");
-			}
+			
+			while (rs.next()) {
 			
 			Vendor vendor = new Vendor( rs.getString("vendor_id"), rs.getString("vendor_password"), rs.getString("vendor_email"),
 										rs.getString("vendor_fullname"), rs.getString("vendor_compName"), rs.getString("vendor_address"),
 										rs.getString("vendor_itin"), rs.getString("vendor_doy"), rs.getString("vendor_phone") );
 			
-			Order order = new Order(rs.getString("order_id"), rs.getTimestamp("order_date"), rs.getBigDecimal("order_total"),
+			orders.add( new Order(rs.getString("order_id"), rs.getTimestamp("order_date"), rs.getBigDecimal("order_total"),
 									rs.getString("order_address"), rs.getString("order_address"), 
-									rs.getString("order_paymentmethod"), client, vendor );
+									rs.getString("order_paymentmethod"), client, vendor ) );
+			}
 			rs.close();
 			stmt.close();
 			db.close();
 
-			return order;
+			return orders;
 
 		}  catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -212,7 +208,7 @@ public class OrderDAO {
 	 * @param Vendor, the Vendor object
 	 * @return Order, the Order object
 	 */
-	public Order getOrderByVendor(Vendor vendor) throws Exception {
+	public List<Order> getOrderByVendor(Vendor vendor) throws Exception {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -220,6 +216,8 @@ public class OrderDAO {
 		String sql = "select * from ocgr_orders left join ocgr_clients on ocgr_orders.client_id = ocgr_clients.client_id left join ocgr_vendors on ocgr_orders.vendor_id = ocgr_vendors.vendor_id where vendor_id=? ;";
 
 		DB db = new DB();
+		
+		List<Order> orders = new ArrayList<Order>();
 
 		try {
 			db.open();
@@ -229,26 +227,21 @@ public class OrderDAO {
 			stmt.setString(1,vendor.getId() );
 			rs = stmt.executeQuery();
 
-			if (!rs.next()) {
-				rs.close();
-				stmt.close();
-				db.close();
-
-				throw new Exception("Not valid Order_id");
-			}
+			while (rs.next()) {
 			
 			Client client = new Client( rs.getString("client_id"), rs.getString("client_password"), rs.getString("client_email"),
 										rs.getString("client_fullname"), rs.getString("client_compName"), rs.getString("client_address"),
 										rs.getString("client_itin"), rs.getString("client_doy"), rs.getString("client_phone") );
 
-			Order order = new Order(rs.getString("order_id"), rs.getTimestamp("order_date"), rs.getBigDecimal("order_total"),
+			orders.add( new Order(rs.getString("order_id"), rs.getTimestamp("order_date"), rs.getBigDecimal("order_total"),
 									rs.getString("order_address"), rs.getString("order_status"), 
-									rs.getString("order_paymentmethod"), client, vendor );
+									rs.getString("order_paymentmethod"), client, vendor ) );
+			}
 			rs.close();
 			stmt.close();
 			db.close();
 
-			return order;
+			return orders;
 
 		}  catch (Exception e) {
 			throw new Exception(e.getMessage());
