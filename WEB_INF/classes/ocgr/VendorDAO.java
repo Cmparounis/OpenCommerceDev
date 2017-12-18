@@ -11,6 +11,11 @@ import java.util.List;
  */
 
 public class VendorDAO {
+	
+	/**
+	 * Default constructor
+	 */
+	public VendorDAO() { }
 
 	/**
 	 * This method returns a List with all Vendors
@@ -22,7 +27,7 @@ public class VendorDAO {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from ismgroup42.ocgr_vendors ;" ;
+		String sql = "select * from ocgr_vendors ;" ;
 
 		DB db = new DB();
 		List<Vendor> vendors = new ArrayList<Vendor>();
@@ -70,7 +75,7 @@ public class VendorDAO {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql = "insert into ismgroup42.ocgr_vendors values (?,?,?,?,?,?,?,?,?);";
+		String sql = "insert into ocgr_vendors values (?,?,?,?,?,?,?,?,?);";
 
 		DB db = new DB();
 
@@ -115,7 +120,7 @@ public class VendorDAO {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql= "select * from ismgroup42.ocgr_vendors where client_email=? and client_password=?;";
+		String sql= "select * from ocgr_vendors where client_email=? and client_password=?;";
 
 		DB db = new DB();
 
@@ -166,7 +171,7 @@ public class VendorDAO {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from ismgroup42.ocgr_vendors where vendor_email=? and vendor_password=? ;";
+		String sql = "select * from ocgr_vendors where vendor_email=? and vendor_password=? ;";
 
 		DB db = new DB();
 
@@ -216,7 +221,7 @@ public class VendorDAO {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql = "update ismgroup42.ocgr_vendors set vendor_password=?, vendor_email=?, vendor_fullname=?, vendor_compName=?,  vendor_address=?, vendor_itin=?,  vendor_doy=?, vendor_phone=?  where vendor_id=? ;";
+		String sql = "update ocgr_vendors set vendor_password=?, vendor_email=?, vendor_fullname=?, vendor_compName=?,  vendor_address=?, vendor_itin=?,  vendor_doy=?, vendor_phone=?  where vendor_id=? ;";
 
 		DB db = new DB();
 

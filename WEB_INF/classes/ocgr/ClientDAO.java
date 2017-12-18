@@ -12,6 +12,11 @@ import java.util.List;
  */
 
 public class ClientDAO {
+	
+	/**
+	 * Default constructor
+	 */
+	public ClientDAO() { }
 
 	/**
 	 * This method returns a List with all Clients
@@ -23,7 +28,7 @@ public class ClientDAO {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from ismgroup42.ocgr_clients ;" ;
+		String sql = "select * from ocgr_clients ;" ;
 
 		DB db = new DB();
 		List<Client> clients = new ArrayList<Client>();
@@ -70,7 +75,7 @@ public class ClientDAO {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql = "insert into ismgroup42.ocgr_clients values (?,?,?,?,?,?,?,?,?);";
+		String sql = "insert into ocgr_clients values (?,?,?,?,?,?,?,?,?);";
 
 		DB db = new DB();
 
@@ -115,7 +120,7 @@ public class ClientDAO {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql= "select * from ismgroup42.ocgr_clients where client_email=? and client_password=?;";
+		String sql= "select * from ocgr_clients where client_email=? and client_password=?;";
 
 		DB db = new DB();
 
@@ -166,7 +171,7 @@ public class ClientDAO {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from ismgroup42.ocgr_clients where client_email=? and client_password=? ;";
+		String sql = "select * ocgr_clients where client_email=? and client_password=? ;";
 
 		DB db = new DB();
 
@@ -217,7 +222,7 @@ public class ClientDAO {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql = "update ismgroup42.ocgr_clients set client_password=?, client_email=?, client_fullname=?, client_compName=?,  client_address=?, client_itin=?,  client_doy=?, client_phone=?  where client_id=? ;";
+		String sql = "update ocgr_clients set client_password=?, client_email=?, client_fullname=?, client_compName=?,  client_address=?, client_itin=?,  client_doy=?, client_phone=?  where client_id=? ;";
 
 		DB db = new DB();
 
@@ -253,7 +258,7 @@ public class ClientDAO {
 	
 	public HashMap<Product, Rating>  getRatingsByClient (Client client) throws Exception{
 		Connection con = null;
-		String sqlquery = "SELECT * FROM ocgr_ratings LEFT JOIN  ocgr_products ON WHERE client_id = ? ;";
+		String sqlquery = "SELECT * FROM ocgr_ratings LEFT JOIN  ocgr_products ON ocgr_ratings.product_id = ocgr_products.product_id WHERE client_id = ? ;";
 		DB db = new DB();
 		HashMap<Product, Rating> ratingMap = new HashMap<Product, Rating>();
 	
