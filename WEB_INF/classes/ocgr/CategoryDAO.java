@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 public class CategoryDAO {
 
+	/**
+	 * Default constructor
+	 */
 	public CategoryDAO() {  }
 
 	public List<Category> getCategories() throws Exception {

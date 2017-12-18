@@ -6,6 +6,12 @@ import java.util.List;
 
 public class Search {
 
+	/**
+	 * Default constructor
+	 */
+	public Search() {  }
+
+	
 	public static ArrayList<Product> SearchForProduct(String search){
 		ArrayList<Product> Aaaaa = new ArrayList<Product>();
 		ArrayList<String> searchwords = DataManagement.toWords(search);
