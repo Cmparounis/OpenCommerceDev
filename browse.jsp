@@ -13,34 +13,34 @@ try {
 } catch(Exception e) { 
 	request.setAttribute("message", e.getMessage());
 }
-String check;
+String check = null;
 String username;
 if (session.getAttribute("user-object")!= null){
 	try {
-		String check = session.getAttribute("user-type");
+		check = (String) session.getAttribute("user-type");
 	} catch (Exception e) {
 		request.setAttribute("message", e.getMessage());
 	}
 	if (check.equals("client")) {
 		Client client = (Client)session.getAttribute("ex3-user-object");
 		ClientDAO cdao = new ClientDAO();
-		username = client.getFullname;
-	} elseif (check.equals("vendor")) {
+		username = client.getFullname();
+	} else if (check.equals("vendor")) {
 		Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
 		VendorDAO vdao = new VendorDAO();
-		username = vendor.getFullname;
+		username = vendor.getFullname();
 	} else {
-		throw new Exception("Invalid user object");
+		throw new ServletException("Invalid user object");
 	}
 }
 
- CategoryDAO cdao = new CategoryDAO();
- List<Category> categories = new ArrayList<Category>();
- try {
+CategoryDAO cdao = new CategoryDAO();
+List<Category> categories = new ArrayList<Category>();
+try {
 	categories= cdao.getCategories();
 } catch (Exception e) {
-		request.setAttribute("message", e.getMessage());
-	}
+	request.setAttribute("message", e.getMessage());
+}
 %>
 
 <!doctype html>
@@ -91,11 +91,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -116,11 +116,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -139,11 +139,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -164,11 +164,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -187,11 +187,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -212,11 +212,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -235,11 +235,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -258,11 +258,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>
@@ -281,11 +281,11 @@ int counter = 0;
 						<figure class="has-overlay">
 							<figcaption class="overlay">
 								<div class="freebie-content">
-									<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><h2><%= category.getName()%></h2></a>
+									<a href="servlet/ViewByCategory?id="<%=category.getId %>""><h2><%= category.getName()%></h2></a>
 									<div class="group">
 										<div class="row">
 											<div class="col-xs-3">
-												<a href="servlet/ViewByCategoryURLParameter?id=<%=category.getId %>"><%= category.getDescription()%></a>
+												<a href="servlet/ViewByCategory?id="<%=category.getId %>""><%= category.getDescription()%></a>
 											</div>
 										</div>
 									</div>

@@ -10,24 +10,24 @@ try {
 } catch(Exception e) { 
 	request.setAttribute("message", e.getMessage());
 }
-String check;
+String check = null;
 String username;
 if (session.getAttribute("user-object")!= null){
 	try {
-		String check = session.getAttribute("user-type");
+		check = (String) session.getAttribute("user-type");
 	} catch (Exception e) {
 		request.setAttribute("message", e.getMessage());
 	}
 	if (check.equals("client")) {
 		Client client = (Client)session.getAttribute("ex3-user-object");
 		ClientDAO cdao = new ClientDAO();
-		username = client.getFullname;
-	} elseif (check.equals("vendor")) {
+		username = client.getFullname();
+	} else if (check.equals("vendor")) {
 		Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
 		VendorDAO vdao = new VendorDAO();
-		username = vendor.getFullname;
+		username = vendor.getFullname();
 	} else {
-		throw new Exception("Invalid user object");
+		throw new ServletException("Invalid user object");
 	}
 }
 %>
