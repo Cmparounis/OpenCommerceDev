@@ -48,7 +48,7 @@ public class ProductDAO {
 		}
 
 	}
-	
+
 	public void registerProduct(Product product, Vendor vendor, int stock, BigDecimal pricing, String scaling_info) throws Exception{
 		Connection con = null;
 		String sqlquery = "INSERT INTO ocgr_products(product_id, product_description, product_name, category_id ) VALUES(?,?,?,?);";
@@ -81,7 +81,7 @@ public class ProductDAO {
 			}
 		}
 		String sqlquery2 = "INSERT INTO ocgr_isSupplied(vendor_id, product_id, available_stock, pricing, scaling_info ) VALUES(?,?,?,?,?);";
-		
+
 		try {
 			db.open();
 			con = db.getConnection();
@@ -112,7 +112,7 @@ public class ProductDAO {
 		}
 
 	}
-	
+
 	public void updateProduct(Product product, Vendor vendor, int stock, BigDecimal pricing, String scaling_info) throws Exception{
 		Connection con = null;
 		String sqlquery = "UPDATE `ocgr_products` SET product_description = ?, product_name = ?, category_id =?  WHERE product_id = ?;";
@@ -145,7 +145,7 @@ public class ProductDAO {
 			}
 		}
 		String sqlquery2 = "UPDATE `ocgr_isSupplied` SET available_stock = ?, pricing = ?, scaling_info =?  WHERE product_id = ? AND vendor_id = ?;";
-		
+
 		try {
 			db.open();
 			con = db.getConnection();
@@ -175,7 +175,7 @@ public class ProductDAO {
 			}
 		}
 	}
-	
+
 	public Product getProductbyId(String id) throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT * FROM ocgr_products WHERE product_id = ?;";
@@ -186,6 +186,7 @@ public class ProductDAO {
 			db.open();
 			con = db.getConnection();
 			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			stmt.setString(1, id );
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				Category currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
@@ -203,10 +204,10 @@ public class ProductDAO {
 		}
 		return currentProduct;
 	}
-	
+
 	public List<Product> getProductsbyVendor(Vendor vendor) throws Exception {
 		Connection con = null;
-		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_issupplied ON ocgr_products.product_id = ocgr_issupplied.product_id WHERE vendor_id = ? ;";
+		/* */String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_issupplied ON ocgr_products.product_id = ocgr_issupplied.product_id LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id WHERE vendor_id = ? ;";
 		DB db = new DB();
 		List<Product> products = new ArrayList<Product>();
 
@@ -233,11 +234,41 @@ public class ProductDAO {
 		}
 		return products;
 	}
-	
+
+	public List<Product> getProductsbyCategory(Category categ) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id WHERE category_id = ? ;";
+		DB db = new DB();
+		List<Product> products = new ArrayList<Product>();
+
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()){
+				stmt.setString(1, categ.getId());
+				Category currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
+				Product currentProduct = new Product( rs.getString("product_id"), rs.getString("product_description"),rs.getString("product_name"), currentCategory );
+				products.add(currentProduct);
+			}
+			stmt.close();
+			db.close();
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
+		return products;
+	}
+
 	public double getAverageRatings(Product product) throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT AVG(rating) FROM ocgr_ratings WHERE product_id = ? ;";
-		
+
 		DB db = new DB();
 		double averageRating = 0;
 		String temp;
@@ -249,7 +280,7 @@ public class ProductDAO {
 			stmt.setString(1, product.getId() );
 			temp = rs.getString(1);
 			averageRating = Double.parseDouble(temp);
-		
+
 			stmt.close();
 			db.close();
 		} catch (Exception e) {
