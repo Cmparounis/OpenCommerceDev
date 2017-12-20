@@ -1,39 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page session="true" %>
-<%@ page import="ocgr" %>
+<%@ page import="ocgr.*" %>
 <%@ page errorPage="error.jsp"%>
 
-<%
 
-try {
-			session.getAttribute("user-object");
-		} catch(Exception e) { 
-			request.setAttribute("message", e.getMessage());
-		}
-		String check = null;
-		String username = null;
-		if (session.getAttribute("user-object")!= null){
-			try {
-				check = (String) session.getAttribute("user-type");
-			} catch (Exception e) {
-				request.setAttribute("message", e.getMessage());
-			}
-			if (check.equals("client")) {
-				Client client = (Client)session.getAttribute("ex3-user-object");
-				ClientDAO cdao = new ClientDAO();
-				username = client.getFullname();
-			} else if (check.equals("vendor")) {
-				Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
-				VendorDAO vdao = new VendorDAO();
-				username = vendor.getFullname();
-			} else {
-				request.setAttribute("message", "You are not authorized to access to this resource. Please login.");
-%>		
-	<jsp:forward page="login_ex3_8130104.jsp"/>	
-<%		
-	}
-}
-%>
+<jsp:include file="COMMON_PAGES/control_session.jsp"/>
+
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -51,10 +22,12 @@ try {
 		<meta name="keywords" content="e-commerce, online store, order, professional, industry, tools, machinery" />
 		<meta name="author" content="Codrops, ismgroup42" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-<%@ include file="COMMON_FILES/page_head.html" %>
+<%@ include file="COMMON_PAGES/page_head.html" %>
 	</head>
+	
 	<body>
-<%@ include file="COMMON_FILES/navbar.jsp" %>
+	
+	<jsp:include file="COMMON_PAGES/navbar.jsp"/>
 
 		<header>
 			<div class="container">
@@ -72,7 +45,7 @@ try {
 		
 		<!-- SECTION: Intro -->
 <% 
-if (check.equals("vendor") {
+if (userType.equals("vendor") {
 %>
 
 		<section class="collective has-padding alternate-bg" id="intro">
@@ -104,22 +77,22 @@ if (check.equals("vendor") {
 							<div class="profile-usermenu">
 								<ul class="nav">
 									<li class="active">
-										<a href="common_pages/profile.jsp">
+										<a href="COMMON_PAGES/profile.jsp">
 										<i class="glyphicon glyphicon-user"></i>
 										Profile </a>
 									</li>
 									<li>
-										<a href="common_pages/products.jsp">
+										<a href="COMMON_PAGES/products.jsp">
 										<i class="glyphicon glyphicon-barcode"></i>
 										Products </a>
 									</li>
 									<li>
-										<a href="common_pages/orders.jsp">
+										<a href="COMMON_PAGES/orders.jsp">
 										<i class="glyphicon glyphicon-shopping-cart"></i>
 										Orders </a>
 									</li>
 									<li>
-										<a href="common_pages/statistics.jsp">
+										<a href="COMMON_PAGES/statistics.jsp">
 										<i class="glyphicon glyphicon-stats"></i>
 										Stats </a>
 									</li>
@@ -130,7 +103,7 @@ if (check.equals("vendor") {
 					</div>
 					<div class="col-md-9">
 						<div class="profile-content">
-						   <%@ include page="common_pages/profile.jsp" %>
+						   <%@ include page="COMMON_PAGES/profile.jsp" %>
 						</div>
 					</div>
 				</div>
@@ -145,7 +118,7 @@ if (check.equals("vendor") {
 			</script>
 		</section>
 	<%
-}else if (check.equals("client")) {
+}else if (userType.equals("client")) {
 	%>
 		<section class="collective has-padding alternate-bg" id="intro">
 			<div class="container">
@@ -176,17 +149,17 @@ if (check.equals("vendor") {
 							<div class="profile-usermenu">
 								<ul class="nav">
 									<li class="active">
-										<a href="common_pages/profile.jsp">
+										<a href="COMMON_PAGES/profile.jsp">
 										<i class="glyphicon glyphicon-user"></i>
 										Profile </a>
 									</li>
 									<li>
-										<a href="common_pages/orders.jsp">
+										<a href="COMMON_PAGES/orders.jsp">
 										<i class="glyphicon glyphicon-shopping-cart"></i>
 										Orders </a>
 									</li>
 									<li>
-										<a href="common_pages/ratings.jsp">
+										<a href="COMMON_PAGES/ratings.jsp">
 										<i class="glyphicon glyphicon-star"></i>
 										Ratings </a>
 									</li>
@@ -198,7 +171,7 @@ if (check.equals("vendor") {
 					</div>
 					<div class="col-md-9">
 						<div class="profile-content">
-						   <%@ include page="common_pages/profile.jsp" %>
+						   <%@ include page="COMMON_PAGES/profile.jsp" %>
 						</div>
 					</div>
 				</div>
@@ -261,6 +234,6 @@ if (check.equals("vendor") {
 		</div>
 	</section>
 	<!-- END SECTION: Stats -->
-	<%@ include page="COMMON_FILES/footer" %>
+	<%@ include page="COMMON_PAGES/footer.jsp" %>
 	</body>
 </html>

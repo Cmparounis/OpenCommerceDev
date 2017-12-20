@@ -3,8 +3,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 wp4">
-					<h2>Join Open Commerce <a href="register.html">NOW</a>, for free.</h2>
-					<a href="register.html" class="btn secondary-white">Get started</a>
+					<h2>Join Open Commerce <a href="register.jsp">NOW</a>, for free.</h2>
+					<a href="register.jsp" class="btn secondary-white">Get started</a>
 				</div>
 			</div>
 		</div>

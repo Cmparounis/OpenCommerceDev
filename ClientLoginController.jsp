@@ -20,6 +20,5 @@ try {
 
 session.setAttribute( "user-object", cdao.findClient( email, password) );
 session.setAttribute( "user-type", "client" );
-
 %>	
-<jsp:forward page="dashboard.jsp"/>
+<jsp:forward page="<%= request.getAttribute("currentPage")%>"/>

@@ -3,34 +3,9 @@
 <%@ page import="ocgr" %>
 <%@ page errorPage="error.jsp"%>
 
-<%
 
-try {
-	session.getAttribute("user-object");
-} catch(Exception e) { 
-	request.setAttribute("message", e.getMessage());
-}
-String check = null;
-String username = null;
-if (session.getAttribute("user-object")!= null){
-	try {
-		check = (String) session.getAttribute("user-type");
-	} catch (Exception e) {
-		request.setAttribute("message", e.getMessage());
-	}
-	if (check.equals("client")) {
-		Client client = (Client)session.getAttribute("ex3-user-object");
-		ClientDAO cdao = new ClientDAO();
-		username = client.getFullname();
-	} else if (check.equals("vendor")) {
-		Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
-		VendorDAO vdao = new VendorDAO();
-		username = vendor.getFullname();
-	} else {
-		throw new ServletException("Invalid user object");
-	}
-}
-%>
+<jsp:include file="COMMON_PAGES/control_session.jsp"/>
+
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -48,12 +23,15 @@ if (session.getAttribute("user-object")!= null){
 	<meta name="keywords" content="e-commerce, online store, order, professional, industry, tools, machinery" />
 	<meta name="author" content="Codrops, ismgroup42" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<%@ include file="COMMON_FILES/page_head.html" %>
+<%@ include file="COMMON_PAGES/page_head.html" %>
 </head>
+
 <body>
-<%@ include file="COMMON_FILES/navbar.jsp" %>
+
+<jsp:include file="COMMON_PAGES/navbar.jsp"/>
+
 <% 
-if (session.getAttribute("user-object")= null) {
+if (session.getAttribute("user-object") == null) {
 %>
 	<header class="hero">
 		<div class="carousel js-flickity">
@@ -163,14 +141,15 @@ if (session.getAttribute("user-object")= null) {
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
 <%
-	if (check.equals("client")) {
+	if (userType.equals("client")) {
+							ClientDAO cdao = new ClientDAO();
 %>
-							<p>With OpenCommerce you have rated <%= cdao.getRatingsByClient.size() %> products.</p>
+							<p>With OpenCommerce you have rated <%= cdao.getRatingsByClient(client).size() %> products.</p>
 <%
-	} elseif (check.equals("vendor")) {		
+	} elseif (userType.equals("vendor")) {	
+							OrderDAO odao = new OrderDAO();
 %>
-							
-							<p>With OpenCommerce you have shipped <%= OrderDAO.getOrdersByVendor(vdao).size() %> products.</p>	
+							<p>With OpenCommerce you have shipped <%= odao.getOrdersByVendor(vendor).size() %> products.</p>	
 <%
 	} 
 %>						
@@ -423,12 +402,13 @@ if (session.getAttribute("user-object")= null) {
 	</section>
 	<!-- END SECTION: Crew -->
 <% 
-if (session.getAttribute("user-object")= null) {
+if (session.getAttribute("user-object")== null) {
 %>
-<jsp:include page="get_started.jsp" />  
+<!-- <jsp:include page="get_started.jsp" /> -->
+<%@ include page="COMMON_PAGES/get_started.jsp" %>  
 <%
 }
 %>
-<%@ include page="COMMON_FILES/footer" %>
+<%@ include page="COMMON_PAGES/footer.jsp" %>
 	</body>
 </html>
