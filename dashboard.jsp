@@ -6,28 +6,28 @@
 <%
 
 try {
-	session.getAttribute("user-object");
-} catch(Exception e) { 
-	request.setAttribute("message", e.getMessage());
-}
-String check;
-String username;
-if (session.getAttribute("user-object")!= null){
-	try {
-		String check = session.getAttribute("user-type");
-	} catch (Exception e) {
-		request.setAttribute("message", e.getMessage());
-	}
-	if (check.equals("client")) {
-		Client client = (Client)session.getAttribute("ex3-user-object");
-		ClientDAO cdao = new ClientDAO();
-		username = client.getFullname;
-	} elseif (check.equals("vendor")) {
-		Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
-		VendorDAO vdao = new VendorDAO();
-		username = vendor.getFullname;
-	} else {
-		request.setAttribute("message", "You are not authorized to access to this resource. Please login.");
+			session.getAttribute("user-object");
+		} catch(Exception e) { 
+			request.setAttribute("message", e.getMessage());
+		}
+		String check = null;
+		String username = null;
+		if (session.getAttribute("user-object")!= null){
+			try {
+				check = (String) session.getAttribute("user-type");
+			} catch (Exception e) {
+				request.setAttribute("message", e.getMessage());
+			}
+			if (check.equals("client")) {
+				Client client = (Client)session.getAttribute("ex3-user-object");
+				ClientDAO cdao = new ClientDAO();
+				username = client.getFullname();
+			} else if (check.equals("vendor")) {
+				Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
+				VendorDAO vdao = new VendorDAO();
+				username = vendor.getFullname();
+			} else {
+				request.setAttribute("message", "You are not authorized to access to this resource. Please login.");
 %>		
 	<jsp:forward page="login_ex3_8130104.jsp"/>	
 <%		
