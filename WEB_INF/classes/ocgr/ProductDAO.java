@@ -293,7 +293,145 @@ public class ProductDAO {
 		}
 		return averageRating;
 	}
+	
+	/*public List<Product> getThreeBest(Category category) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT AVG(rating) FROM ocgr_ratings WHERE product_id = ? ;";
 
+		DB db = new DB();
+		double averageRating = 0;
+		String temp;
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			ResultSet rs = stmt.executeQuery();
+			stmt.setString(1, product.getId() );
+			temp = rs.getString(1);
+			averageRating = Double.parseDouble(temp);
+
+			stmt.close();
+			db.close();
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
+		return averageRating;
+	}*/
+
+
+	public BigDecimal getPricing(Product product) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT pricing FROM ocgr_isSupplied WHERE product_id = ? ;";
+
+		DB db = new DB();
+		BigDecimal pricing = new BigDecimal(0) ;
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			ResultSet rs = stmt.executeQuery();
+			stmt.setString(1, product.getId() );
+			pricing = rs.getBigDecimal("pricing");
+
+			stmt.close();
+			db.close();
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
+		return pricing;
+	}
+	
+	public int getStock(Product product) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT available_stock FROM ocgr_isSupplied WHERE product_id = ? ;";
+
+		DB db = new DB();
+		int stock = 0;
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			ResultSet rs = stmt.executeQuery();
+			stmt.setString(1, product.getId() );
+			stock = rs.getInt("available_stock");
+
+			stmt.close();
+			db.close();
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
+		return stock;
+	}
+	
+	public String getScaling(Product product) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT scaling_info FROM ocgr_isSupplied WHERE product_id = ? ;";
+
+		DB db = new DB();
+		String scaling = null;
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			ResultSet rs = stmt.executeQuery();
+			stmt.setString(1, product.getId() );
+			scaling = rs.getString("scaling_info");
+
+			stmt.close();
+			db.close();
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
+		return scaling;
+	}
+	
+	public int getQuantity(Product product) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT quantity FROM ocgr_isOrdered WHERE product_id = ? ;";
+
+		DB db = new DB();
+		int quantity = 0;
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			ResultSet rs = stmt.executeQuery();
+			stmt.setString(1, product.getId() );
+			quantity = rs.getInt("quantity");
+
+			stmt.close();
+			db.close();
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
+		return quantity;
+	}
+	
 	public List<Product> getProducts() throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id;";

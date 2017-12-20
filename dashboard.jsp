@@ -11,7 +11,7 @@ try {
 			request.setAttribute("message", e.getMessage());
 		}
 		String check = null;
-		String username;
+		String username = null;
 		if (session.getAttribute("user-object")!= null){
 			try {
 				check = (String) session.getAttribute("user-type");

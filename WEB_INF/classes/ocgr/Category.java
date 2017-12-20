@@ -11,7 +11,6 @@ public class Category {
 		this.description = description;
 		this.name = name;
 	}
-
 	/*G's and S's*/
 
 	public String getId() {
