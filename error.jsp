@@ -2,6 +2,10 @@
 <%@ page import="ocgr.*" %>
 <%@ page isErrorPage="true"%>
 
+<%
+	String username = "";
+%>
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -19,19 +23,27 @@
 		<meta name="author" content="Codrops, ismgroup42" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-	<%@ include file="COMMON_PAGES/page_head.html" %>
+	<%@ include file="common_pages/page_head.html" %>
 	
 	</head>
 	
 	<body>
 	
-	<jsp:include file="COMMON_PAGES/navbar.jsp"/>
+	<%@ include file="common_pages/navbar.jsp" %>
+	
+	<section class="crew has-padding alternate-bg" id="team">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h4>Error</h4>		
+					<h3 class="text-center wp1"> Oops an error occured! <%-- exception.getMessage() --%> </h3>
+				</div>
+			</div>	
+		</div>
+	</section>	
 	
 	
-	<h3 class="text-center wp1"> Oops an error occured! (<%= exception.getMessage() %>) </h3>
-	
-	
-	<%@ include page="COMMON_PAGES/footer.jsp" %>
+	<jsp:include page="common_pages/footer.jsp"/>
 	
 	</body>
 

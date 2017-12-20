@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page errorPage="error.jsp"%>
 
+<%
+	String username = "";
+%>
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -19,13 +22,13 @@
 		<meta name="author" content="Codrops, ismgroup42" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-	<%@ include file="COMMON_PAGES/page_head.html" %>
+	<%@ include file="common_pages/page_head.html" %>
 	
 	</head>
 	
 	<body>
 	
-	<jsp:include file="COMMON_PAGES/navbar.jsp"/>
+	<%@ include file="common_pages/navbar.jsp" %>
 	
 	<header>
 		<div class="container">
@@ -143,7 +146,7 @@
 	</section>
 	<!--End Main section-->
 	
-	<%@ include page="COMMON_PAGES/footer.jsp" %>
+	<jsp:include page="common_pages/footer.jsp"/>
 		
 </body>
 

@@ -3,8 +3,10 @@
 <%@ page errorPage="error.jsp"%>
 
 <% 
+String username = "";
+
 if (request.getAttribute("currentPage") != null) {
-	String previousPage = request.getAttribute("currentPage"); 
+	String previousPage = (String)request.getAttribute("currentPage"); 
 	request.setAttribute("currentPage", previousPage);
 }
 %>
@@ -26,13 +28,13 @@ if (request.getAttribute("currentPage") != null) {
 		<meta name="author" content="Codrops, ismgroup42" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-	<%@ include file="COMMON_PAGES/page_head.html" %>
+	<%@ include file="common_pages/page_head.html" %>
 	
 	</head>
 	
 	<body>
 	
-	<jsp:include file="COMMON_PAGES/navbar.jsp"/>
+	<%@ include file="common_pages/navbar.jsp" %>
 
 		<header>
 			<div class="container">
@@ -136,7 +138,7 @@ if (request.getAttribute("currentPage") != null) {
 			</div>	
 		</section>
 	
-		<%@ include page="COMMON_PAGES/footer.jsp" %>
+		<jsp:include page="common_pages/footer.jsp"/>
 	
 	</body>
 </html>

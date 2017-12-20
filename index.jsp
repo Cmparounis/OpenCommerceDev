@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page session="true" %>
-<%@ page import="ocgr" %>
+<%@ page import="java.util.List, java.util.ArrayList, ocgr.*" %>
 <%@ page errorPage="error.jsp"%>
 
-<jsp:include file="COMMON_PAGES/control_session.jsp"/>
+<%@ include file="common_pages/control_session.jsp" %>
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -21,188 +20,188 @@
 	<meta name="keywords" content="e-commerce, online store, order, professional, industry, tools, machinery" />
 	<meta name="author" content="Codrops, ismgroup42" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<%@ include file="COMMON_PAGES/page_head.html" %>
+	<%@ include file="common_pages/page_head.html" %>
 </head>
 
 <body>
 
-<jsp:include file="COMMON_PAGES/navbar.jsp"/>
+	<%@ include file="common_pages/navbar.jsp" %>
 
-<% 
-if (session.getAttribute("user-object") == null) {
-%>
-	<header class="hero">
-		<div class="carousel js-flickity">
-			<div class="carousel-cell" style="background-image: url(img/hero-bg-01.jpg);">
-				<div class="hero-bg">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<h1 class="wp1">Open Commerce. A platform made by professionals, for professionals.</h1>
-								<a href="#intro" class="btn primary wp2">Learn more</a>
+	<% 
+	if (session.getAttribute("user-object") == null) {
+	%>
+		<header class="hero">
+			<div class="carousel js-flickity">
+				<div class="carousel-cell" style="background-image: url(img/hero-bg-01.jpg);">
+					<div class="hero-bg">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<h1 class="wp1">Open Commerce. A platform made by professionals, for professionals.</h1>
+									<a href="#intro" class="btn primary wp2">Learn more</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
+									<p>Find the offer that is just <span class="bold italic">right</span> for you. </p>
+								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
-								<p>Find the offer that is just <span class="bold italic">right</span> for you. </p>
+					</div>
+				</div>
+				<div class="carousel-cell" style="background-image: url(img/hero-bg-02.jpg);">
+					<div class="hero-bg">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<h1 class="wp1">Powerful tools, at your hands. Ready to deliver.</h1>
+									<a href="register.html" class="btn primary wp2">Get Started Now</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
+									<p>Search, Filter, Compare, Order. Instantaneously.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-cell" style="background-image: url(img/hero-bg-03.jpg);">
+					<div class="hero-bg">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<h1 class="wp1">Open Commerce for vendors. <span class="bold italic">Simplifying transactions, a click at a time.</span> </h1>
+									<a href="register.html" class="btn primary wp2">Register Now</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
+									<p>A payment model that's the right fit for your needs, now.</p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="carousel-cell" style="background-image: url(img/hero-bg-02.jpg);">
-				<div class="hero-bg">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<h1 class="wp1">Powerful tools, at your hands. Ready to deliver.</h1>
-								<a href="register.html" class="btn primary wp2">Get Started Now</a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
-								<p>Search, Filter, Compare, Order. Instantaneously.</p>
-							</div>
-						</div>
+			<div class='mouse-container'>
+				<a href="#intro">
+					<div class='mouse'>
+						<span class='scroll-down'></span>
+					</div>
+				</a>
+			</div>
+		</header>
+		<!-- SECTION: Intro -->
+		<section class="collective has-padding" id="intro">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>The Platform</h4>
+					</div>
+					<div class="col-md-9 wp3">
+						<h1>Introducing Open Commerce</h1>
+						<p>Opencommerce.gr is the e-commerce platform that was designed with industry and professionals first in mind. Simplify your workflow and dedicate more time to <span class="bold italic">what matters</span>.</p>
+						<h1>There is always an offer</h1>
+						<p>Still waiting on that offer email? Place your orders instanteously. By bringing vendors and clients together Open Commerce manages to eliminate the buffer time in corporate transactions</p>
+						<h1>Flexible pricing</h1>
+						<p>Pricing that scales with the quantity ordered. Flexible payment solutions. Zero comissions. All in one place.</p>
+						<h1>Open Commerce<small> for Vendors</small></h1>
+						<p>More than a marketplace. Be where yor clients are with Open Commerce.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-5">
+					</div>
+					<div class="col-md-2">
+						<a href="register.html" class="btn primary wp4">Get Started Now</a>
+					</div>
+					<div class="col-md-5">
 					</div>
 				</div>
 			</div>
+		</section>
+		<!-- END SECTION: Intro -->
+	<% 
+	} else {
+	%>
+		<header class="hero">
 			<div class="carousel-cell" style="background-image: url(img/hero-bg-03.jpg);">
 				<div class="hero-bg">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12 text-center">
-								<h1 class="wp1">Open Commerce for vendors. <span class="bold italic">Simplifying transactions, a click at a time.</span> </h1>
-								<a href="register.html" class="btn primary wp2">Register Now</a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
-								<p>A payment model that's the right fit for your needs, now.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class='mouse-container'>
-			<a href="#intro">
-				<div class='mouse'>
-					<span class='scroll-down'></span>
-				</div>
-			</a>
-		</div>
-	</header>
-	<!-- SECTION: Intro -->
-	<section class="collective has-padding" id="intro">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3">
-					<h4>The Platform</h4>
-				</div>
-				<div class="col-md-9 wp3">
-					<h1>Introducing Open Commerce</h1>
-					<p>Opencommerce.gr is the e-commerce platform that was designed with industry and professionals first in mind. Simplify your workflow and dedicate more time to <span class="bold italic">what matters</span>.</p>
-					<h1>There is always an offer</h1>
-					<p>Still waiting on that offer email? Place your orders instanteously. By bringing vendors and clients together Open Commerce manages to eliminate the buffer time in corporate transactions</p>
-					<h1>Flexible pricing</h1>
-					<p>Pricing that scales with the quantity ordered. Flexible payment solutions. Zero comissions. All in one place.</p>
-					<h1>Open Commerce<small> for Vendors</small></h1>
-					<p>More than a marketplace. Be where yor clients are with Open Commerce.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-				</div>
-				<div class="col-md-2">
-					<a href="register.html" class="btn primary wp4">Get Started Now</a>
-				</div>
-				<div class="col-md-5">
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- END SECTION: Intro -->
-<% 
-} else {
-%>
-	<header class="hero">
-		<div class="carousel-cell" style="background-image: url(img/hero-bg-03.jpg);">
-			<div class="hero-bg">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12 text-center">
-							<h1 class="wp1">Welcome, <%= username %>.<span class="bold italic">Thank you for choosing OpenCommerce for your transactions</span> </h1>
-							<a href="dashboard.jsp" class="btn primary wp2">Go to Dashboard</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
-<%
-	if (userType.equals("client")) {
-							ClientDAO cdao = new ClientDAO();
-%>
-							<p>With OpenCommerce you have rated <%= cdao.getRatingsByClient(client).size() %> products.</p>
-<%
-	} elseif (userType.equals("vendor")) {	
-							OrderDAO odao = new OrderDAO();
-%>
-							<p>With OpenCommerce you have shipped <%= odao.getOrdersByVendor(vendor).size() %> products.</p>	
-<%
-	} 
-%>						
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="carousel js-flickity">
-			<div class="carousel-cell" style="background-image: url(img/hero-bg-01.jpg);">
-				<div class="hero-bg">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<h1 class="wp1">Start making your next move. </h1>
-								<a href="advanced_search.jsp" class="btn primary wp2">Get Started</a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
-								<p>Welcome to the eCommerce platform that was designed <span class="bold italic">just for you.</span></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="carousel-cell" style="background-image: url(img/hero-bg-02.jpg);">
-				<div class="hero-bg">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<h1 class="wp1">Easy management & deep insights</h1>
+								<h1 class="wp1">Welcome, <%= username %>.<span class="bold italic">Thank you for choosing OpenCommerce for your transactions</span> </h1>
 								<a href="dashboard.jsp" class="btn primary wp2">Go to Dashboard</a>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
-								<p>Search, Filter, Compare, Order. Instantaneously.</p>
+	<%
+		if (userType.equals("client")) {
+								ClientDAO cdao = new ClientDAO();
+	%>
+								<p>With OpenCommerce you have rated <%= cdao.getRatingsByClient(client).size() %> products.</p>
+	<%
+		} else if (userType.equals("vendor")) {	
+								OrderDAO odao = new OrderDAO();
+	%>
+								<p>With OpenCommerce you have shipped <%= odao.getOrderByVendor(vendor).size() %> products.</p>	
+	<%
+		} 
+	%>						
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class='mouse-container'>
-			<a href="#intro">
-				<div class='mouse'>
-					<span class='scroll-down'></span>
+			<div class="carousel js-flickity">
+				<div class="carousel-cell" style="background-image: url(img/hero-bg-01.jpg);">
+					<div class="hero-bg">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<h1 class="wp1">Start making your next move. </h1>
+									<a href="advanced_search.jsp" class="btn primary wp2">Get Started</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
+									<p>Welcome to the eCommerce platform that was designed <span class="bold italic">just for you.</span></p>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</a>
-		</div>
-	</header>
-<%
-} 
-%>	
+				<div class="carousel-cell" style="background-image: url(img/hero-bg-02.jpg);">
+					<div class="hero-bg">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<h1 class="wp1">Easy management & deep insights</h1>
+									<a href="dashboard.jsp" class="btn primary wp2">Go to Dashboard</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2 hero-intro-text wp3">
+									<p>Search, Filter, Compare, Order. Instantaneously.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='mouse-container'>
+				<a href="#intro">
+					<div class='mouse'>
+						<span class='scroll-down'></span>
+					</div>
+				</a>
+			</div>
+		</header>
+	<%
+	} 
+	%>	
 
 	<!-- SECTION: Stats -->
 	<div class="stats has-padding-tall">
@@ -218,14 +217,14 @@ if (session.getAttribute("user-object") == null) {
 				<div class="col-md-4 col-sm-4 col-4 stats-container">
 					<i class="icon icon-Truck"></i>
 					<div class="stats-wrapper">
-						<p class="stats-number" data-stop="12392">12.392</p>
+						<p class="stats-number" data-stop="1239">1239</p>
 						<p class="stats-text">Orders in 2017&emsp;</p>
 					</div>
 				</div>
 				<div class="col-md-4 col-sm-4 col-4  stats-container">
 					<i class="icon icon-DesktopMonitor"></i>
 					<div class="stats-wrapper">
-						<p class="stats-number" data-stop="70000">70000</p>
+						<p class="stats-number" data-stop="7500">7500</p>
 						<p class="stats-text">Unique Visits in 2017&emsp;</p>
 					</div>
 				</div>
@@ -399,14 +398,14 @@ if (session.getAttribute("user-object") == null) {
 		</div>
 	</section>
 	<!-- END SECTION: Crew -->
-<% 
-if (session.getAttribute("user-object")== null) {
-%>
-<!-- <jsp:include page="get_started.jsp" /> -->
-<%@ include page="COMMON_PAGES/get_started.jsp" %>  
-<%
-}
-%>
-<%@ include page="COMMON_PAGES/footer.jsp" %>
+	<% 
+	if (session.getAttribute("user-object")== null) {
+	%>
+	<jsp:include page="common_pages/get_started.jsp"/>  
+	<%
+	}
+	%>
+	<jsp:include page="common_pages/footer.jsp"/>
+	
 	</body>
 </html>
