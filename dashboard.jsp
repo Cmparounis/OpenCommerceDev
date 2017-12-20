@@ -2,7 +2,7 @@
 <%@ page import="ocgr.*" %>
 <%@ page errorPage="error.jsp"%>
 
-<jsp:forward file="COMMON_PAGES/control_session.jsp"/>
+<jsp:include file="COMMON_PAGES/control_session.jsp"/>
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -25,7 +25,7 @@
 	
 	<body>
 	
-	<jsp:forward file="COMMON_PAGES/navbar.jsp"/>
+	<jsp:include file="COMMON_PAGES/navbar.jsp"/>
 
 		<header>
 			<div class="container">

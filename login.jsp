@@ -32,7 +32,7 @@ if (request.getAttribute("currentPage") != null) {
 	
 	<body>
 	
-	<jsp:forward file="COMMON_PAGES/navbar.jsp"/>
+	<jsp:include file="COMMON_PAGES/navbar.jsp"/>
 
 		<header>
 			<div class="container">
