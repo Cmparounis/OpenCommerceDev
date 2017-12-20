@@ -25,7 +25,7 @@
 	
 	<body>
 	
-	<%@ include file="COMMON_PAGES/navbar.jsp" %>
+	<jsp:forward file="COMMON_PAGES/navbar.jsp"/>
 	
 	
 	<h3 class="text-center wp1"> Oops an error occured! (<%= exception.getMessage() %>) </h3>
