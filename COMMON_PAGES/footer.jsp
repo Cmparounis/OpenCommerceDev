@@ -50,7 +50,7 @@
 	<script src="http://vjs.zencdn.net/5.4.6/video.min.js"></script>
 	<!-- jQuery local fallback -->
 	<script>
-	window.jQuery || document.write('<script src="js/min/jquery-1.11.2.min.js"><\/script>')
+	window.jQuery || document.write('<script src="js/min/jquery-1.11.2.min.js"></script>')
 	</script>
 	<!-- JS Locals -->
 	<script src="js/min/bootstrap.min.js"></script>

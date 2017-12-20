@@ -9,8 +9,6 @@
 						<ul class="primary-nav">
 							<li><a href="index.html">Home</a></li>
 							<li><a href="categories.html">Browse</a></li>
-							<li><a href="dashboard.html">Dashboard</a></li>
-							<li><a href="advanced_search.html">Advanced Search</a></li>
 						</ul>
 					</nav>
 					<div class="secondary-nav-wrapper">
