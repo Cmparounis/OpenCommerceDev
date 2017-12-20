@@ -2,13 +2,7 @@
 <%@ page import="java.util.List, java.util.ArrayList, ocgr.*" %>
 <%@ page errorPage="error.jsp"%>
 
-<<<<<<< HEAD
 <%@ include file="common_pages/control_session.jsp" %>
-=======
-
-<jsp:include file="COMMON_PAGES/control_session.jsp"/>
->>>>>>> 344ec17195d26216cc5b7b82fd191272c5aaf735
-
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
