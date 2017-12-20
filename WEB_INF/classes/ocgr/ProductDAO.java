@@ -176,7 +176,7 @@ public class ProductDAO {
 		}
 	}
 
-	public Product getProductbyId(String id) throws Exception {
+	public Product getProductById(String id) throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT * FROM ocgr_products WHERE product_id = ?;";
 		DB db = new DB();
@@ -186,7 +186,6 @@ public class ProductDAO {
 			db.open();
 			con = db.getConnection();
 			PreparedStatement stmt = con.prepareStatement(sqlquery);
-			stmt.setString(1, id );
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				Category currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
@@ -205,9 +204,9 @@ public class ProductDAO {
 		return currentProduct;
 	}
 
-	public List<Product> getProductsbyVendor(Vendor vendor) throws Exception {
+	public List<Product> getProductByVendor(Vendor vendor) throws Exception {
 		Connection con = null;
-		/* */String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_issupplied ON ocgr_products.product_id = ocgr_issupplied.product_id LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id WHERE vendor_id = ? ;";
+		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_issupplied ON ocgr_products.product_id = ocgr_issupplied.product_id WHERE vendor_id = ? ;";
 		DB db = new DB();
 		List<Product> products = new ArrayList<Product>();
 
@@ -218,36 +217,6 @@ public class ProductDAO {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				stmt.setString(1, vendor.getId());
-				Category currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
-				Product currentProduct = new Product( rs.getString("product_id"), rs.getString("product_description"),rs.getString("product_name"), currentCategory );
-				products.add(currentProduct);
-			}
-			stmt.close();
-			db.close();
-		} catch (Exception e) {
-			throw new Exception( e.getMessage() );
-		} finally {
-			try {
-				db.close();
-			} catch (Exception e) {
-			}
-		}
-		return products;
-	}
-
-	public List<Product> getProductsbyCategory(Category categ) throws Exception {
-		Connection con = null;
-		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id WHERE category_id = ? ;";
-		DB db = new DB();
-		List<Product> products = new ArrayList<Product>();
-
-		try {
-			db.open();
-			con = db.getConnection();
-			PreparedStatement stmt = con.prepareStatement(sqlquery);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()){
-				stmt.setString(1, categ.getId());
 				Category currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
 				Product currentProduct = new Product( rs.getString("product_id"), rs.getString("product_description"),rs.getString("product_name"), currentCategory );
 				products.add(currentProduct);

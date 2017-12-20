@@ -1,24 +1,26 @@
-<%@ page import="java.util.HashSet" %>
+<%@ page import="java.util.Set, java.util.HashSet" %>
 <%
 request.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
 	
-String userType;
-String username;
+String userType = "";
+String username = "";
+Client client = null;
+Vendor vendor = null;
 
 if (session.getAttribute("user-object")!= null){
 	
 	try {
-		userType = session.getAttribute("user-type");
+		userType = (String)session.getAttribute("user-type");
 	} catch (Exception e) {
 		request.setAttribute("message", e.getMessage());
 	}
 	
 	if (userType.equals("client")) {
-		Client client = (Client)session.getAttribute("user-object");
-		username = client.getFullname;
-	} elseif (userType.equals("vendor")) {
-		Vendor vendor = (Vendor)session.getAttribute("user-object");
-		username = vendor.getFullname;
+		client = (Client)session.getAttribute("user-object");
+		username = client.getFullname();
+	} else if (userType.equals("vendor")) {
+		vendor = (Vendor)session.getAttribute("user-object");
+		username = vendor.getFullname();
 	}
 	
 } else {
