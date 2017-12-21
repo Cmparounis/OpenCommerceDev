@@ -35,7 +35,7 @@ public class DataManagement {
 	}
 
 
-	public static String generateId (String type) throws Exception {
+	public String generateId (String type) throws Exception {
 
 		String id;
 

@@ -36,7 +36,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h4>Error</h4>		
-					<h3 class="text-center wp1"> Oops an error occured! <%-- exception.getMessage() --%> </h3>
+					<h3 class="text-center wp1"> Oops an error occured! <%= exception.getMessage() %> </h3>
 				</div>
 			</div>	
 		</div>
