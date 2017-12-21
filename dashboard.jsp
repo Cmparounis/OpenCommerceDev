@@ -20,7 +20,7 @@
 		<meta name="keywords" content="e-commerce, online store, order, professional, industry, tools, machinery" />
 		<meta name="author" content="Codrops, ismgroup42" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-<%@ include file="common_pages/page_head.html" %>
+		<%@ include file="common_pages/page_head.html" %>
 	</head>
 	
 	<body>
@@ -33,7 +33,8 @@
 					<div class="col-md-4">
 					</div>
 					<div class="col-md-4">
-						<h1>Welcome,<%= username %></h1>
+						<h1>Welcome</h1>
+						<h1><%= username %></h1>
 					</div>
 					<div class="col-md-4">
 					</div>

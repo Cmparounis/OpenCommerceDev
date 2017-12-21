@@ -1,9 +1,11 @@
 <%@ page import="java.util.Set, java.util.HashSet" %>
 <%
 request.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
-	
-String userType = "";
-String username = "";
+%>
+<%=request.getAttribute("currentPage")%>
+<%	
+String userType = null;
+String username = null;
 Client client = null;
 Vendor vendor = null;
 
@@ -26,9 +28,9 @@ if (session.getAttribute("user-object")!= null){
 } else {
 	Set<String> pages = new HashSet<String>();
 	pages.add("dashboard.jsp");
-	pages.add("");
-	pages.add("");
-	pages.add("");
+	pages.add("//");
+	pages.add("//");
+	pages.add("//");
 	if( pages.contains(request.getRequestURI().replace(request.getContextPath() + "/","")) ) {
 		request.setAttribute("message", "Login is necessary in order to proceed");
 %>

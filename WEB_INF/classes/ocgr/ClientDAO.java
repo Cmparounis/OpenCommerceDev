@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class ClientDAO {
-	
+
 	/**
 	 * Default constructor
 	 */
@@ -110,7 +110,7 @@ public class ClientDAO {
 	}//End of registerClient
 
 	/**
-	 * Check vendor's credentials.
+	 * Check Client's credentials.
 	 *
 	 * @param email, String
 	 * @param password, String
@@ -255,13 +255,13 @@ public class ClientDAO {
 			} catch (Exception e) {}
 		}
 	} //End of updateClient
-	
+
 	public HashMap<Product, Rating>  getRatingsByClient (Client client) throws Exception{
 		Connection con = null;
 		String sqlquery = "SELECT * FROM ocgr_ratings LEFT JOIN  ocgr_products ON ocgr_ratings.product_id = ocgr_products.product_id WHERE client_id = ? ;";
 		DB db = new DB();
 		HashMap<Product, Rating> ratingMap = new HashMap<Product, Rating>();
-	
+
 		try {
 			db.open();
 			con = db.getConnection();

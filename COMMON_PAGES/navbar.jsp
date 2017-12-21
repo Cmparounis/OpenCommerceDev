@@ -7,17 +7,17 @@
 				<div class="primary-nav-wrapper">
 					<nav>
 						<ul class="primary-nav">
-							<li><a href="index.html">Home</a></li>
-							<li><a href="categories.html">Browse</a></li>
+							<li><a href="index.jsp">Home</a></li>
+							<li><a href="browse.jsp">Browse</a></li>
 						</ul>
 					</nav>
 					<div class="secondary-nav-wrapper">
 						<ul class="secondary-nav">
 						<% if (session.getAttribute("user-object") == null){ %>
-							<li class="subscribe"><a href="login.html">Log In</a></li>
+							<li class="subscribe"><a href="login.jsp">Log In</a></li>
 							<% } else { %>
 							<li class="subscribe dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true"><%= username %><span class="caret"></span></a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="dashboard.jsp" aria-haspopup="true"><%= username %><span class="caret"></span></a>
 								<div class="dropdown-menu">
 									<ul class="dropdown-menu">
 										<li><a class="dropdown-item" href="dashboard.jsp">Dashboard</a>
@@ -26,14 +26,14 @@
 								</div>	
 							</li>
 <% } %>
-							<li class="search"><a href="#search" class="show-search"><i class="fa fa-search"></i></a></li>
+							<li class="search"><a href="#" class="show-search"><i class="fa fa-search"></i></a></li>
 						</ul>
 					</div>
 					<div class="search-wrapper">
 						<ul class="search">
 							<li>
 								<input type="text" id="search-input" placeholder="Start typing then hit enter to search">
-								<span><a href="advanced_search.html">Advanced search</a></span>
+								<span><a href="search.jsp">Advanced search</a></span>
 							</li>
 							<li>
 								<a href="#" class="hide-search"><i class="fa fa-close"></i></a>

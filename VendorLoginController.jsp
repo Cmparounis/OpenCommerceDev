@@ -3,8 +3,8 @@
 <%@ page errorPage="error.jsp"%>
 
 <%
-String email = request.getParameter("email");
-String password = request.getParameter("password");
+String email = (String)request.getParameter("email");
+String password = (String)request.getParameter("password");
 
 VendorDao vdao = new VendorDao();
 
@@ -20,5 +20,15 @@ try {
 
 session.setAttribute( "user-object", vdao.findVendor( email, password) );
 session.setAttribute( "user-type", "vendor" );
+
+if (request.getAttribute("currentPage") == null ) {
+%>
+	<jsp:forward page="dashboard.jsp"/>
+<%	
+} else {	
+	String previousPage = (String)request.getAttribute("currentPage");
 %>	
-<jsp:forward page= "<%= request.getAttribute("currentPage") %>"/>
+	<jsp:forward page="<%=previousPage%>"/>
+<%	
+}
+%>

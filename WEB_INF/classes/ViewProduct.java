@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +13,15 @@ import ocgr.*;
 
 @SuppressWarnings("serial")
 public class ViewProduct extends HttpServlet {
-	public void doGet 	(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+	public void doPost 	(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
 		response.setContentType("text/html; charset=ISO-8859-7");
 		PrintWriter out = new PrintWriter(response.getWriter(), true);
 		HttpSession session = request.getSession(true);
-		
+
 		request.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
-		
+
 		try {
 			session.getAttribute("user-object");
 		} catch(Exception e) {
@@ -43,8 +47,15 @@ public class ViewProduct extends HttpServlet {
 				throw new ServletException("Invalid user object");
 			}
 		} else {
-			request.setAttribute("message", "Login is necessary in order to proceed");
-			response.sendRedirect("http://ism.dmst.aueb.gr/ismgroup42/login.jsp");		
+			Set<String> pages = new HashSet<String>();
+			pages.add("dashboard.jsp");
+			pages.add("");
+			pages.add("");
+			pages.add("");
+			if( pages.contains(request.getRequestURI().replace(request.getContextPath() + "/","")) ) {
+				request.setAttribute("message", "Login is necessary in order to proceed");
+				response.sendRedirect("http://ism.dmst.aueb.gr/ismgroup42/login.jsp");
+			}
 		}
 
 		String product_id = request.getParameter("id");
@@ -56,7 +67,7 @@ public class ViewProduct extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		String category_id = null;
 		try {
 			category_id = product.getCategory().getId();
@@ -133,19 +144,19 @@ public class ViewProduct extends HttpServlet {
 			out.println("		<div class='row'>");
 			out.println("			<div class='header-nav-wrapper'>");
 			out.println("				<div class='logo'>");
-			out.println("					<a href='index.html'><img src='img/synthetica-logo.png' alt='Logo Goes Here'></a>");
+			out.println("					<a href='index.jsp'><img src='img/synthetica-logo.png' alt='Logo Goes Here'></a>");
 			out.println("				</div>");
 			out.println("				<div class='primary-nav-wrapper'>");
 			out.println("					<nav>");
 			out.println("						<ul class='primary-nav'>");
-			out.println("							<li><a href='index.html'>Home</a></li>");
-			out.println("							<li><a href='categories.html'>Browse</a></li>");
+			out.println("							<li><a href='index.jsp'>Home</a></li>");
+			out.println("							<li><a href='browse.jsp'>Browse</a></li>");
 			out.println("						</ul>");
 			out.println("					</nav>");
 			out.println("					<div class='secondary-nav-wrapper'>");
 			out.println("						<ul class='secondary-nav'>");
 			if (session.getAttribute("user-object") == null){
-				out.println("							<li class='subscribe'><a href='login.html'>Log In</a></li>");
+				out.println("							<li class='subscribe'><a href='login.jsp'>Log In</a></li>");
 			} else {
 				out.println("							<li class='subscribe dropdown'>");
 				out.println("								<a class='dropdown-toggle' data-toggle='dropdown' href='#' aria-haspopup='true'>"+ username +"<span class='caret'></span></a>");
@@ -164,7 +175,7 @@ public class ViewProduct extends HttpServlet {
 			out.println("						<ul class='search'>");
 			out.println("							<li>");
 			out.println("								<input type='text' id='search-input' placeholder='Start typing then hit enter to search'>");
-			out.println("								<span><a href='advanced_search.html'>Advanced search</a></span>");
+			out.println("								<span><a href='search.jsp'>Advanced search</a></span>");
 			out.println("							</li>");
 			out.println("							<li>");
 			out.println("								<a href='#' class='hide-search'><i class='fa fa-close'></i></a>");
@@ -198,7 +209,7 @@ public class ViewProduct extends HttpServlet {
 			out.println("				<div class='col-md-6'>");
 			out.println("					<div class='row'>");
 			out.println("						 <div class='col-md-6'>");
-			out.println("							<p><a href='categories.html'>Home</a> > <a href='#'>"+product.getCategory().getName() +"</a> > <a href='#intro'> MakerBot Replicator Z18</a></p>");
+			out.println("							<p><a href='browse.jsp'>Home</a> > <a href='#'>"+product.getCategory().getName() +"</a> > <a href='#intro'> MakerBot Replicator Z18</a></p>");
 			out.println("						</div>");
 			out.println("					</div>");
 			out.println("					<div class='row'>");
@@ -420,7 +431,7 @@ public class ViewProduct extends HttpServlet {
 				out.println("		<div class='row'>");
 				out.println("			<div class='col-md-12 wp4 animated fadeInUp'>");
 				out.println("				<h2>Join Open Commerce <a href='http://tympanus.net/codrops/?p=26570'>NOW</a>, for free.</h2>");
-				out.println("				<a href='register.html' class='btn secondary-white'>Get started</a>");
+				out.println("				<a href='register.jsp' class='btn secondary-white'>Get started</a>");
 				out.println("			</div>");
 				out.println("		</div>");
 				out.println("	</div>");
@@ -449,10 +460,10 @@ public class ViewProduct extends HttpServlet {
 			out.println("			<div class='row'>");
 			out.println("				<div class='col-md-12 footer-nav'>");
 			out.println("					<ul class='footer-primary-nav'>");
-			out.println("						<li><a href='index.html'>Home</a></li>");
-			out.println("						<li><a href='categories.html'>Browse</a></li>");
-			out.println("						<li><a href='advanced_search.html'>Advanced Search</a></li>");
-			out.println("						<li><a href='dashboard.html'>Dashboard</a></li>");
+			out.println("						<li><a href='index.jsp'>Home</a></li>");
+			out.println("						<li><a href='browse.jsp'>Browse</a></li>");
+			out.println("						<li><a href='search.jsp'>Advanced Search</a></li>");
+			out.println("						<li><a href='dashboard.jsp'>Dashboard</a></li>");
 			out.println("					</ul>");
 			out.println("					<ul class='footer-share'>");
 			out.println("						<li><a href='http://tympanus.net/codrops/licensing/'>Licence</a></li>");
@@ -519,5 +530,9 @@ public class ViewProduct extends HttpServlet {
 			out.println("</body>");
 			out.println("</html>");
 		}
+	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        doPost(request, response);
 	}
 }
