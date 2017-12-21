@@ -178,7 +178,7 @@ public class ProductDAO {
 
 	public Product getProductById(String id) throws Exception {
 		Connection con = null;
-		String sqlquery = "SELECT * FROM ocgr_products WHERE product_id = ?;";
+		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id WHERE product_id = ?;";
 		DB db = new DB();
 		Product currentProduct = null ;
 
@@ -186,6 +186,7 @@ public class ProductDAO {
 			db.open();
 			con = db.getConnection();
 			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				Category currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
@@ -193,6 +194,8 @@ public class ProductDAO {
 			}
 			stmt.close();
 			db.close();
+
+			return currentProduct;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -201,12 +204,42 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return currentProduct;
+	}
+
+	public List<Product> getProductByCategory(Category category) throws Exception {
+		Connection con = null;
+		String sqlquery = "SELECT * FROM ocgr_products WHERE category_id = ?;";
+		DB db = new DB();
+
+		List<Product> products = new ArrayList<Product>();
+
+		try {
+			db.open();
+			con = db.getConnection();
+			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			stmt.setString(1, category.getId());
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()){
+
+				products.add( new Product( rs.getString("product_id"), rs.getString("product_description"),rs.getString("product_name"), category ) );
+			}
+			stmt.close();
+			db.close();
+
+			return products;
+		} catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		} finally {
+			try {
+				db.close();
+			} catch (Exception e) {
+			}
+		}
 	}
 
 	public List<Product> getProductByVendor(Vendor vendor) throws Exception {
 		Connection con = null;
-		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_issupplied ON ocgr_products.product_id = ocgr_issupplied.product_id WHERE vendor_id = ? ;";
+		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_issupplied ON ocgr_products.product_id = ocgr_issupplied.product_id LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id WHERE vendor_id = ? ;";
 		DB db = new DB();
 		List<Product> products = new ArrayList<Product>();
 
@@ -214,15 +247,17 @@ public class ProductDAO {
 			db.open();
 			con = db.getConnection();
 			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			stmt.setString(1, vendor.getId());
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
-				stmt.setString(1, vendor.getId());
 				Category currentCategory = new Category( rs.getString("category_id"), rs.getString("category_description"), rs.getString("category_name") );
 				Product currentProduct = new Product( rs.getString("product_id"), rs.getString("product_description"),rs.getString("product_name"), currentCategory );
 				products.add(currentProduct);
 			}
 			stmt.close();
 			db.close();
+
+			return products;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -231,7 +266,6 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return products;
 	}
 
 	public double getAverageRatings(Product product) throws Exception {
@@ -239,19 +273,23 @@ public class ProductDAO {
 		String sqlquery = "SELECT AVG(rating) FROM ocgr_ratings WHERE product_id = ? ;";
 
 		DB db = new DB();
+
 		double averageRating = 0;
 		String temp;
 		try {
 			db.open();
 			con = db.getConnection();
 			PreparedStatement stmt = con.prepareStatement(sqlquery);
-			ResultSet rs = stmt.executeQuery();
 			stmt.setString(1, product.getId() );
+			ResultSet rs = stmt.executeQuery();
+
 			temp = rs.getString(1);
 			averageRating = Double.parseDouble(temp);
 
 			stmt.close();
 			db.close();
+
+			return averageRating;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -260,27 +298,28 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return averageRating;
 	}
-	
-	/*public List<Product> getThreeBest(Category category) throws Exception {
+
+	public List<Product> getThreeBest(Category category) throws Exception {
 		Connection con = null;
-		String sqlquery = "SELECT AVG(rating) FROM ocgr_ratings WHERE product_id = ? ;";
+		String sqlquery = "SELECT ocgr_products.product_id, product_description, product_name, AVG(rating) AS Average FROM ocgr_ratings LEFT JOIN ocgr_products ON ocgr_ratings.product_id=ocgr_products.product_id GROUP BY product_id ORDER BY Average ;";
 
 		DB db = new DB();
-		double averageRating = 0;
-		String temp;
+
+		List<Product> products = new ArrayList<Product>();
 		try {
 			db.open();
 			con = db.getConnection();
 			PreparedStatement stmt = con.prepareStatement(sqlquery);
 			ResultSet rs = stmt.executeQuery();
-			stmt.setString(1, product.getId() );
-			temp = rs.getString(1);
-			averageRating = Double.parseDouble(temp);
+			for (int i=0; i<3 ; i++) {
+				products.add(new Product( rs.getString("product_id"), rs.getString("product_description"),rs.getString("product_name"), category ));
+			}
 
 			stmt.close();
 			db.close();
+
+			return products;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -289,8 +328,7 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return averageRating;
-	}*/
+	}
 
 
 	public BigDecimal getPricing(Product product) throws Exception {
@@ -309,6 +347,9 @@ public class ProductDAO {
 
 			stmt.close();
 			db.close();
+
+			return pricing;
+
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -317,9 +358,8 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return pricing;
 	}
-	
+
 	public int getStock(Product product) throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT available_stock FROM ocgr_isSupplied WHERE product_id = ? ;";
@@ -336,6 +376,8 @@ public class ProductDAO {
 
 			stmt.close();
 			db.close();
+
+			return stock;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -344,9 +386,8 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return stock;
 	}
-	
+
 	public String getScaling(Product product) throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT scaling_info FROM ocgr_isSupplied WHERE product_id = ? ;";
@@ -363,6 +404,8 @@ public class ProductDAO {
 
 			stmt.close();
 			db.close();
+
+			return scaling;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -371,9 +414,8 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return scaling;
 	}
-	
+
 	public int getQuantity(Product product) throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT quantity FROM ocgr_isOrdered WHERE product_id = ? ;";
@@ -390,6 +432,8 @@ public class ProductDAO {
 
 			stmt.close();
 			db.close();
+
+			return quantity;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -398,9 +442,8 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return quantity;
 	}
-	
+
 	public List<Product> getProducts() throws Exception {
 		Connection con = null;
 		String sqlquery = "SELECT * FROM ocgr_products LEFT JOIN ocgr_categories ON ocgr_products.category_id = ocgr_categories.category_id;";
@@ -420,6 +463,8 @@ public class ProductDAO {
 			}
 			stmt.close();
 			db.close();
+
+			return products;
 		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
 		} finally {
@@ -428,7 +473,7 @@ public class ProductDAO {
 			} catch (Exception e) {
 			}
 		}
-		return products;
 	}
+
 }
 
