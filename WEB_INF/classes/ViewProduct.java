@@ -11,45 +11,58 @@ import ocgr.*;
 
 @SuppressWarnings("serial")
 public class ViewProduct extends HttpServlet {
-	public void doPost 	(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public void doGet 	(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html; charset=ISO-8859-7");
 		PrintWriter out = new PrintWriter(response.getWriter(), true);
 		HttpSession session = request.getSession(true);
+		
+		request.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
+		
 		try {
 			session.getAttribute("user-object");
-		} catch(Exception e) { 
+		} catch(Exception e) {
 			request.setAttribute("message", e.getMessage());
 		}
-		String check = null;
+		String userType = null;
 		String username = null;
+		Client client = null;
+		Vendor vendor = null;
 		if (session.getAttribute("user-object")!= null){
 			try {
-				check = (String) session.getAttribute("user-type");
+				userType = (String) session.getAttribute("user-type");
 			} catch (Exception e) {
 				request.setAttribute("message", e.getMessage());
 			}
-			if (check.equals("client")) {
-				Client client = (Client)session.getAttribute("ex3-user-object");
+			if (userType.equals("client")) {
+				client = (Client)session.getAttribute("user-object");
 				username = client.getFullname();
-			} else if (check.equals("vendor")) {
-				Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
+			} else if (userType.equals("vendor")) {
+				vendor = (Vendor)session.getAttribute("user-object");
 				username = vendor.getFullname();
 			} else {
 				throw new ServletException("Invalid user object");
 			}
+		} else {
+			request.setAttribute("message", "Login is necessary in order to proceed");
+			response.sendRedirect("http://ism.dmst.aueb.gr/ismgroup42/login.jsp");		
 		}
-		
+
 		String product_id = request.getParameter("id");
-	
+
 		ProductDAO pdao = new ProductDAO();
 		Product product = null;
 		try {
-			product = pdao.getProductbyId(product_id);
+			product = pdao.getProductById(product_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		String category_id = product.getCategory().getId();
+		String category_id = null;
+		try {
+			category_id = product.getCategory().getId();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		CategoryDAO cdao = new CategoryDAO();
 		Category category = null;
 		try {
@@ -59,11 +72,11 @@ public class ViewProduct extends HttpServlet {
 		}
 		List<Product> products = new ArrayList<Product>();
 		try {
-			products = pdao.getProductsbyCategory(category);
+			products = pdao.getProductByCategory(category);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			out.println("<!doctype html>");
 			out.println("<!--[if lt IE 7]>      <html class='no-js lt-ie9 lt-ie8 lt-ie7' lang=''> <![endif]-->");
@@ -131,9 +144,9 @@ public class ViewProduct extends HttpServlet {
 			out.println("					</nav>");
 			out.println("					<div class='secondary-nav-wrapper'>");
 			out.println("						<ul class='secondary-nav'>");
-			if (session.getAttribute("user-object") == null){ 
+			if (session.getAttribute("user-object") == null){
 				out.println("							<li class='subscribe'><a href='login.html'>Log In</a></li>");
-			} else { 
+			} else {
 				out.println("							<li class='subscribe dropdown'>");
 				out.println("								<a class='dropdown-toggle' data-toggle='dropdown' href='#' aria-haspopup='true'>"+ username +"<span class='caret'></span></a>");
 				out.println("								<div class='dropdown-menu'>");
@@ -143,7 +156,7 @@ public class ViewProduct extends HttpServlet {
 				out.println("									</ul>");
 				out.println("								</div>	");
 				out.println("							</li>");
-			} 
+			}
 			out.println("							<li class='search'><a href='#search' class='show-search'><i class='fa fa-search'></i></a></li>");
 			out.println("						</ul>");
 			out.println("					</div>");
@@ -165,7 +178,7 @@ public class ViewProduct extends HttpServlet {
 			out.println("			</div>");
 			out.println("		</div>");
 			out.println("	</div>");
-			
+
 			out.println("	<!--Main section-->");
 			out.println("	<section class='main' id='product page'>");
 			out.println("		<div class='container-fluid'>");
@@ -263,22 +276,24 @@ public class ViewProduct extends HttpServlet {
 			out.println("			</div>");
 			out.println("		</div>");
 			out.println("	</section>");
+
 			out.println("	<!-- SECTION: Reccomended -->");
-			for (Product cProduct : products) {
-				double pdao.getAverageRatings(cProduct);
-			}
+			List<Product> bestProducts = pdao.getThreeBest(category);
+			int counter = 0;
+			int rowcheck = 0;
+			for (Product cproduct : bestProducts) {
 				counter++;
 				if (counter == 1 && rowcheck > 0) {
 					out.println("			<div class='row has-top-margin'>");
 					out.println("				<div class='col-md-4'>");
 					out.println("					<article class='article-post'>");
-					out.println("						<a href='/ViewProduct?id="+product.getId()+"'>");
+					out.println("						<a href='/ViewProduct?id="+cproduct.getId()+"'>");
 					out.println("							<div class='article-image has-overlay' style='background-image: url(img/article-01.jpg)'>");
 					out.println("							</div>");
 					out.println("							<figure>");
 					out.println("								<figcaption>");
 					out.println("									<h2>Product 1</h2>");
-					out.println("									<p><em>Product Description:</em> "+product.getDescription()+"</p>");
+					out.println("									<p><em>Product Description:</em> "+cproduct.getDescription()+"</p>");
 					out.println("								</figcaption>");
 					out.println("							</figure>");
 					out.println("						</a>");
@@ -288,23 +303,23 @@ public class ViewProduct extends HttpServlet {
 					out.println("							</li>");
 					out.println("							");
 					out.println("							<li class='article-comments'>");
-					out.println("								<span><i class='fa fa-star'></i>"+pdao.getAverageRatings(product)+"&emsp;</span>");
+					out.println("								<span><i class='fa fa-star'></i>"+pdao.getAverageRatings(cproduct)+"&emsp;</span>");
 					out.println("							</li>");
 					out.println("						</ul>");
 					out.println("					</article>");
 					out.println("				</div>");
-					
+
 				}else if (counter == 1) {
 					out.println("			<div class='row'>");
 					out.println("				<div class='col-md-4'>");
 					out.println("					<article class='article-post'>");
-					out.println("						<a href='/ViewProduct?id="+product.getId()+"'>");
+					out.println("						<a href='/ViewProduct?id="+cproduct.getId()+"'>");
 					out.println("							<div class='article-image has-overlay' style='background-image: url(img/article-01.jpg)'>");
 					out.println("							</div>");
 					out.println("							<figure>");
 					out.println("								<figcaption>");
 					out.println("									<h2>Product 1</h2>");
-					out.println("									<p><em>Product Description:</em> "+product.getDescription()+"</p>");
+					out.println("									<p><em>Product Description:</em> "+cproduct.getDescription()+"</p>");
 					out.println("								</figcaption>");
 					out.println("							</figure>");
 					out.println("						</a>");
@@ -314,7 +329,7 @@ public class ViewProduct extends HttpServlet {
 					out.println("							</li>");
 					out.println("							");
 					out.println("							<li class='article-comments'>");
-					out.println("								<span><i class='fa fa-star'></i>"+pdao.getAverageRatings(product)+"&emsp;</span>");
+					out.println("								<span><i class='fa fa-star'></i>"+pdao.getAverageRatings(cproduct)+"&emsp;</span>");
 					out.println("							</li>");
 					out.println("						</ul>");
 					out.println("					</article>");
@@ -323,13 +338,13 @@ public class ViewProduct extends HttpServlet {
 				} else {
 					out.println("				<div class='col-md-4'>");
 					out.println("					<article class='article-post'>");
-					out.println("						<a href='/ViewProduct?id="+product.getId()+"'>");
+					out.println("						<a href='/ViewProduct?id="+cproduct.getId()+"'>");
 					out.println("							<div class='article-image has-overlay' style='background-image: url(img/article-01.jpg)'>");
 					out.println("							</div>");
 					out.println("							<figure>");
 					out.println("								<figcaption>");
 					out.println("									<h2>Product 1</h2>");
-					out.println("									<p><em>Product Description:</em> "+product.getDescription()+"</p>");
+					out.println("									<p><em>Product Description:</em> "+cproduct.getDescription()+"</p>");
 					out.println("								</figcaption>");
 					out.println("							</figure>");
 					out.println("						</a>");
@@ -339,7 +354,7 @@ public class ViewProduct extends HttpServlet {
 					out.println("							</li>");
 					out.println("							");
 					out.println("							<li class='article-comments'>");
-					out.println("								<span><i class='fa fa-star'></i>"+pdao.getAverageRatings(product)+"&emsp;</span>");
+					out.println("								<span><i class='fa fa-star'></i>"+pdao.getAverageRatings(cproduct)+"&emsp;</span>");
 					out.println("							</li>");
 					out.println("						</ul>");
 					out.println("					</article>");
@@ -398,19 +413,19 @@ public class ViewProduct extends HttpServlet {
 			out.println("	</section>");
 			out.println("	<!-- END SECTION: Specs -->");
 
-			
-			if (session.getAttribute("user-object") == null){ 
+
+			if (session.getAttribute("user-object") == null){
 				out.println("<section class='get-started has-padding text-center' id='get-started'>");
-				out.println("		<div class='container'>");
-				out.println("			<div class='row'>");
-				out.println("				<div class='col-md-12 wp4 animated fadeInUp'>");
-				out.println("					<h2>Join Open Commerce <a href='http://tympanus.net/codrops/?p=26570'>NOW</a>, for free.</h2>");
-				out.println("					<a href='register.html' class='btn secondary-white'>Get started</a>");
-				out.println("				</div>");
+				out.println("	<div class='container'>");
+				out.println("		<div class='row'>");
+				out.println("			<div class='col-md-12 wp4 animated fadeInUp'>");
+				out.println("				<h2>Join Open Commerce <a href='http://tympanus.net/codrops/?p=26570'>NOW</a>, for free.</h2>");
+				out.println("				<a href='register.html' class='btn secondary-white'>Get started</a>");
 				out.println("			</div>");
 				out.println("		</div>");
-				out.println("	</section>");
-	
+				out.println("	</div>");
+				out.println("</section>");
+
 			}
 			out.println("	<!-- SECTION: Footer -->");
 			out.println("	<footer class='has-padding footer-bg'>");
@@ -474,8 +489,35 @@ public class ViewProduct extends HttpServlet {
 			out.println("	<script src='js/min/flickity.pkgd.min.js'></script>");
 			out.println("	<script src='js/min/scripts-min.js'></script>");
 
-		} catch (Exception e) {
+		}
+
+		}catch (Exception e) {
 			e.printStackTrace();
+			out.println("	<div class='container'>");
+			out.println("		<div class='alert alert-danger' role='alert'>");
+			out.println("			<p class='text-center'> Error : " + e.getMessage()+"</p>");
+			out.println("		</div>");
+			out.println("	</div>");
+			out.println("	<!-- footer -->");
+			out.println("		<footer class='navbar-inverse'>");
+			out.println("			<div class='container'>");
+			out.println("				<div class='row'>");
+			out.println("					<div class='col-xs-12'>");
+			out.println("						<p class='text-center'>&copy; Copyright 2017 by ismgroup42</p>");
+			out.println("					</div>");
+			out.println("				</div>");
+			out.println("			</div>");
+			out.println("		</footer>");
+			out.println("		<!-- End footer -->");
+			out.println("");
+			out.println("		<!-- =================== Place all javascript at the end of the document so the pages load faster =================== -->");
+			out.println("		<!-- jQuery library -->");
+			out.println("		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>");
+			out.println("		<!-- Bootstrap core JavaScript -->");
+			out.println("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>");
+			out.println("");
+			out.println("</body>");
+			out.println("</html>");
 		}
 	}
 }

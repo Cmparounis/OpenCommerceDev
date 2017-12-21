@@ -11,34 +11,39 @@ import ocgr.*;
 
 @SuppressWarnings("serial")
 public class ViewByCategory extends HttpServlet {
-	public void doPost 	(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public void doGet 	(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html; charset=ISO-8859-7");
 		PrintWriter out = new PrintWriter(response.getWriter(), true);
 		HttpSession session = request.getSession(true);
 		try {
 			session.getAttribute("user-object");
-		} catch(Exception e) { 
+		} catch(Exception e) {
 			request.setAttribute("message", e.getMessage());
 		}
-		String check = null;
+		String userType = null;
 		String username = null;
+		Client client = null;
+		Vendor vendor = null;
 		if (session.getAttribute("user-object")!= null){
 			try {
-				check = (String) session.getAttribute("user-type");
+				userType = (String) session.getAttribute("user-type");
 			} catch (Exception e) {
 				request.setAttribute("message", e.getMessage());
 			}
-			if (check.equals("client")) {
-				Client client = (Client)session.getAttribute("ex3-user-object");
+			if (userType.equals("client")) {
+				client = (Client)session.getAttribute("user-object");
 				username = client.getFullname();
-			} else if (check.equals("vendor")) {
-				Vendor vendor = (Vendor)session.getAttribute("ex3-user-object");
+			} else if (userType.equals("vendor")) {
+				vendor = (Vendor)session.getAttribute("user-object");
 				username = vendor.getFullname();
 			} else {
 				throw new ServletException("Invalid user object");
 			}
+		} else {
+			request.setAttribute("message", "Login is necessary in order to proceed");
+			response.sendRedirect("http://ism.dmst.aueb.gr/ismgroup42/login.jsp");		
 		}
-		
+
 		String category_id = request.getParameter("id");
 		CategoryDAO cdao = new CategoryDAO();
 		Category category = null;
@@ -50,11 +55,11 @@ public class ViewByCategory extends HttpServlet {
 		ProductDAO pdao = new ProductDAO();
 		List<Product> products = new ArrayList<Product>();
 		try {
-			products = pdao.getProductsbyCategory(category);
+			products = pdao.getProductByCategory(category);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			out.println("<!doctype html>");
 			out.println("<!--[if lt IE 7]>      <html class='no-js lt-ie9 lt-ie8 lt-ie7' lang=''> <![endif]-->");
@@ -122,9 +127,9 @@ public class ViewByCategory extends HttpServlet {
 			out.println("					</nav>");
 			out.println("					<div class='secondary-nav-wrapper'>");
 			out.println("						<ul class='secondary-nav'>");
-			if (session.getAttribute("user-object") == null){ 
+			if (session.getAttribute("user-object") == null){
 				out.println("							<li class='subscribe'><a href='login.html'>Log In</a></li>");
-			} else { 
+			} else {
 			out.println("							<li class='subscribe dropdown'>");
 			out.println("								<a class='dropdown-toggle' data-toggle='dropdown' href='#' aria-haspopup='true'>"+ username +"<span class='caret'></span></a>");
 			out.println("								<div class='dropdown-menu'>");
@@ -134,7 +139,7 @@ public class ViewByCategory extends HttpServlet {
 			out.println("									</ul>");
 			out.println("								</div>	");
 			out.println("							</li>");
-			} 
+			}
 			out.println("							<li class='search'><a href='#search' class='show-search'><i class='fa fa-search'></i></a></li>");
 			out.println("						</ul>");
 			out.println("					</div>");
@@ -202,7 +207,7 @@ public class ViewByCategory extends HttpServlet {
 					out.println("						</ul>");
 					out.println("					</article>");
 					out.println("				</div>");
-					
+
 				}else if (counter == 1) {
 					out.println("			<div class='row'>");
 					out.println("				<div class='col-md-4'>");
@@ -324,8 +329,33 @@ public class ViewByCategory extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+			out.println("	<div class='container'>");
+			out.println("		<div class='alert alert-danger' role='alert'>");
+			out.println("			<p class='text-center'> Error : " + e.getMessage()+"</p>");
+			out.println("		</div>");
+			out.println("	</div>");
+			out.println("	<!-- footer -->");
+			out.println("		<footer class='navbar-inverse'>");
+			out.println("			<div class='container'>");
+			out.println("				<div class='row'>");
+			out.println("					<div class='col-xs-12'>");
+			out.println("						<p class='text-center'>&copy; Copyright 2017 by ismgroup42</p>");
+			out.println("					</div>");
+			out.println("				</div>");
+			out.println("			</div>");
+			out.println("		</footer>");
+			out.println("		<!-- End footer -->");
+			out.println("");
+			out.println("		<!-- =================== Place all javascript at the end of the document so the pages load faster =================== -->");
+			out.println("		<!-- jQuery library -->");
+			out.println("		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>");
+			out.println("		<!-- Bootstrap core JavaScript -->");
+			out.println("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>");
+			out.println("");
+			out.println("</body>");
+			out.println("</html>");
 		}
-		
+
 	}
 }
