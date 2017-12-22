@@ -20,7 +20,7 @@ public class ViewProduct extends HttpServlet {
 		PrintWriter out = new PrintWriter(response.getWriter(), true);
 		HttpSession session = request.getSession(true);
 
-		request.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
+		session.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
 
 		try {
 			session.getAttribute("user-object");

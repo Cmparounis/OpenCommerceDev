@@ -2,7 +2,7 @@
 		<div class="row">
 			<div class="header-nav-wrapper">
 				<div class="logo">
-					<a href="index.html"><img src="img/synthetica-logo.png" alt="Logo Goes Here"></a>
+					<a href="index.jsp"><img src="img/synthetica-logo.png" alt="Logo Goes Here"></a>
 				</div>
 				<div class="primary-nav-wrapper">
 					<nav>

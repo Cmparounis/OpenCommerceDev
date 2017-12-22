@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, java.util.List, ocgr.*" %>
-<%@ page errorPage="error.jsp"%>
+
 
 <%@ include file="common_pages/control_session.jsp" %>
 

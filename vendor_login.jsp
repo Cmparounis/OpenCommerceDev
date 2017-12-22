@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="ocgr.*" %>
-<%@ page errorPage="error.jsp"%>
+
 
 <% 
 String username = "";
@@ -63,32 +63,51 @@ if (request.getAttribute("currentPage") != null) {
 				</div>
 				<br><br><br>
 			<% } %>	
+			
 				<div class="row">
-					<div class="row">
-						<div class="col-sm-offset-3 col-md-12">
-							<h4 id="login">Enter your </h4>
+					<div class="col-md-6 content-left">
+						<div class="row">
+							<div class="col-md-12">
+								<h4 id="login">Existing Vendors</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-1">
+							</div>
+							<div class="col-md-9">
+								<form class="wp2 animated fadeInUp" name="vLoginForm" method="post" action="VendorLoginController.jsp">
+									<div class="form-group">
+										<label for="inputEmail">Email address</label>
+										<input type="email" class="form-control" name="email" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" required><br>
+										<h5><small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small></h5>
+									</div>
+									<div class="form-group">
+										<label for="inputPassword">Password</label>
+										<input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password" required>
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-default price">Login</button> 
+										<span><a href="login.jsp">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Back to Customer Login</a></span>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-sm-offset-4 col-md-4">
-							<form class="wp2 animated fadeInUp" name="vLoginForm" method="post" action="VendorLoginController.jsp">
-								<div class="form-group">
-									<label for="inputEmail">Email address</label>
-									<input type="email" class="form-control" name="email" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email"><br>
-									<h5><small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small></h5>
-								</div>
-								<div class="form-group">
-									<label for="inputPassword">Password</label>
-									<input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
-								</div>
-								<div class="form-group">
-									<button type="submit" class="btn btn-default price">Login</button>
-									<span><a href="login.jsp">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Back to Customer Login</a></span>
-								</div>
-							</form>
+					<div class="col-md-6 content-right">
+						<div class="row">
+							<div class="col-md-12">
+								<h4>New to Open Commerce?</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+							</div>
+							<div class="col-md-10">
+								<a href="register.jsp" class="btn primary wp2 animated fadeInUp">Get Started Now</a>
+							</div>
 						</div>
 					</div>
-				</div>		
+				</div>
 			</div>	
 		</section>
 	

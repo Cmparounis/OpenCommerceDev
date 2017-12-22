@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List, java.util.ArrayList, ocgr.*" %>
-<%@ page errorPage="error.jsp"%>
+
 
 <%@ include file="common_pages/control_session.jsp" %>
 
@@ -55,7 +55,7 @@
 							<div class="row">
 								<div class="col-md-12 text-center">
 									<h1 class="wp1">Powerful tools, at your hands. Ready to deliver.</h1>
-									<a href="register.html" class="btn primary wp2">Get Started Now</a>
+									<a href="register.jsp" class="btn primary wp2">Get Started Now</a>
 								</div>
 							</div>
 							<div class="row">
@@ -72,7 +72,7 @@
 							<div class="row">
 								<div class="col-md-12 text-center">
 									<h1 class="wp1">Open Commerce for vendors. <span class="bold italic">Simplifying transactions, a click at a time.</span> </h1>
-									<a href="register.html" class="btn primary wp2">Register Now</a>
+									<a href="register.jsp" class="btn primary wp2">Register Now</a>
 								</div>
 							</div>
 							<div class="row">
@@ -114,7 +114,7 @@
 					<div class="col-md-5">
 					</div>
 					<div class="col-md-2">
-						<a href="register.html" class="btn primary wp4">Get Started Now</a>
+						<a href="register.jsp" class="btn primary wp4">Get Started Now</a>
 					</div>
 					<div class="col-md-5">
 					</div>
@@ -243,7 +243,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<article class="article-post">
-						<a href="product_page.html">
+						<a href="product_page.jsp">
 							<div class="article-image has-overlay" style="background-image: url(img/article-01.jpg)">
 							</div>
 							<figure>
@@ -269,7 +269,7 @@
 				</div>
 				<div class="col-md-4">
 					<article class="article-post">
-						<a href="product_page.html">
+						<a href="product_page.jsp">
 							<div class="article-image has-overlay" style="background-image: url(img/article-02.jpg)">
 							</div>
 							<figure>
@@ -294,7 +294,7 @@
 				</div>
 				<div class="col-md-4">
 					<article class="article-post">
-						<a href="product_page.html">
+						<a href="product_page.jsp">
 							<div class="article-image has-overlay" style="background-image: url(img/article-03.jpg)">
 							</div>
 							<figure>
@@ -319,7 +319,7 @@
 				</div>
 			</div>
 			<div class="row is-centered">
-				<a href="#intro" class="btn secondary view-more">View more</a>
+				<a href="ViewProduct" class="btn secondary view-more">View more</a>
 			</div>
 		</div>
 	</section>
@@ -392,7 +392,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<br><h1 class="text-center"><small>We are currently looking to expand. Want to join our young team?Have a look <a class="bold italic" href="careers.html">here</a>.</small></h1>
+					<br><h1 class="text-center"><small>We are currently looking to expand. Want to join our young team?Have a look <a class="bold italic" href="careers.jsp">here</a>.</small></h1>
 				</div>
 			</div>
 		</div>

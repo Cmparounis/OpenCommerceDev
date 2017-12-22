@@ -14,9 +14,13 @@ import ocgr.*;
 @SuppressWarnings("serial")
 public class ViewByCategory extends HttpServlet {
 	public void doPost 	(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
 		response.setContentType("text/html; charset=ISO-8859-7");
 		PrintWriter out = new PrintWriter(response.getWriter(), true);
 		HttpSession session = request.getSession(true);
+		
+		session.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
+		
 		try {
 			session.getAttribute("user-object");
 		} catch(Exception e) {

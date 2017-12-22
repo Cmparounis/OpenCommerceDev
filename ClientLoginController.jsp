@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="ocgr.*" %>
-<%@ page errorPage="error.jsp"%>
 
 <%
 String email = (String)request.getParameter("email");
@@ -12,7 +11,7 @@ try {
 	cdao.authenticate(email, password);
 } catch(Exception e) {
 	
-	request.setAttribute("message", e.getMessage() );
+	request.setAttribute("message", e.getMessage());
 %>
 	<jsp:forward page="login.jsp"/>	
 <%	
@@ -21,12 +20,12 @@ try {
 session.setAttribute( "user-object", cdao.findClient( email, password) );
 session.setAttribute( "user-type", "client" );
 
-if (request.getAttribute("currentPage") == null ) {
+if (session.getAttribute("currentPage") == null ) {
 %>
 	<jsp:forward page="dashboard.jsp"/>
 <%	
 } else {	
-	String previousPage = (String)request.getAttribute("currentPage");
+	String previousPage = (String)session.getAttribute("currentPage");
 %>	
 	<jsp:forward page="<%=previousPage%>"/>
 <%	

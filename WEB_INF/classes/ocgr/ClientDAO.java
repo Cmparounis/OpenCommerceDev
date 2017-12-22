@@ -171,7 +171,7 @@ public class ClientDAO {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * ocgr_clients where client_email=? and client_password=? ;";
+		String sql = "select * from ocgr_clients where client_email=? and client_password=? ;";
 
 		DB db = new DB();
 

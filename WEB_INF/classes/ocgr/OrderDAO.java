@@ -70,7 +70,7 @@ public class OrderDAO {
 				Client client = new Client( rs.getString("client_id"), rs.getString("client_password"), rs.getString("client_email"),
 											rs.getString("client_fullname"), rs.getString("client_compName"), rs.getString("client_address"),
 											rs.getString("client_itin"), rs.getString("client_doy"), rs.getString("client_phone") );
-				
+
 				Vendor vendor = new Vendor( rs.getString("vendor_id"), rs.getString("vendor_password"), rs.getString("vendor_email"),
 											rs.getString("vendor_fullname"), rs.getString("vendor_compName"), rs.getString("vendor_address"),
 											rs.getString("vendor_itin"), rs.getString("vendor_doy"), rs.getString("vendor_phone") );
@@ -127,11 +127,11 @@ public class OrderDAO {
 			Client client = new Client( rs.getString("client_id"), rs.getString("client_password"), rs.getString("client_email"),
 										rs.getString("client_fullname"), rs.getString("client_compName"), rs.getString("client_address"),
 										rs.getString("client_itin"), rs.getString("client_doy"), rs.getString("client_phone") );
-			
+
 			Vendor vendor = new Vendor( rs.getString("vendor_id"), rs.getString("vendor_password"), rs.getString("vendor_email"),
 										rs.getString("vendor_fullname"), rs.getString("vendor_compName"), rs.getString("vendor_address"),
 										rs.getString("vendor_itin"), rs.getString("vendor_doy"), rs.getString("vendor_phone") );
-			
+
 			Order order = new Order(rs.getString("order_id"), rs.getTimestamp("order_date"), rs.getBigDecimal("order_total"),
 									rs.getString("order_address"), rs.getString("order_address"),
 									rs.getString("order_paymentmethod"), client, vendor );
@@ -167,7 +167,7 @@ public class OrderDAO {
 		DB db = new DB();
 
 		List<Order> orders = new ArrayList<Order>();
-		
+
 		try {
 			db.open();
 			con = db.getConnection();
@@ -175,15 +175,15 @@ public class OrderDAO {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1,client.getId() );
 			rs = stmt.executeQuery();
-			
+
 			while (rs.next()) {
-			
+
 			Vendor vendor = new Vendor( rs.getString("vendor_id"), rs.getString("vendor_password"), rs.getString("vendor_email"),
 										rs.getString("vendor_fullname"), rs.getString("vendor_compName"), rs.getString("vendor_address"),
 										rs.getString("vendor_itin"), rs.getString("vendor_doy"), rs.getString("vendor_phone") );
-			
+
 			orders.add( new Order(rs.getString("order_id"), rs.getTimestamp("order_date"), rs.getBigDecimal("order_total"),
-									rs.getString("order_address"), rs.getString("order_address"), 
+									rs.getString("order_address"), rs.getString("order_address"),
 									rs.getString("order_paymentmethod"), client, vendor ) );
 			}
 			rs.close();
@@ -213,10 +213,10 @@ public class OrderDAO {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from ocgr_orders left join ocgr_clients on ocgr_orders.client_id = ocgr_clients.client_id left join ocgr_vendors on ocgr_orders.vendor_id = ocgr_vendors.vendor_id where vendor_id=? ;";
+		String sql = "select * from ocgr_orders left join ocgr_clients on ocgr_orders.client_id = ocgr_clients.client_id left join ocgr_vendors on ocgr_orders.vendor_id = ocgr_vendors.vendor_id where ocgr_vendors.vendor_id=? ;";
 
 		DB db = new DB();
-		
+
 		List<Order> orders = new ArrayList<Order>();
 
 		try {
@@ -228,13 +228,13 @@ public class OrderDAO {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-			
+
 			Client client = new Client( rs.getString("client_id"), rs.getString("client_password"), rs.getString("client_email"),
 										rs.getString("client_fullname"), rs.getString("client_compName"), rs.getString("client_address"),
 										rs.getString("client_itin"), rs.getString("client_doy"), rs.getString("client_phone") );
 
 			orders.add( new Order(rs.getString("order_id"), rs.getTimestamp("order_date"), rs.getBigDecimal("order_total"),
-									rs.getString("order_address"), rs.getString("order_status"), 
+									rs.getString("order_address"), rs.getString("order_status"),
 									rs.getString("order_paymentmethod"), client, vendor ) );
 			}
 			rs.close();
@@ -251,7 +251,7 @@ public class OrderDAO {
 				db.close();
 			} catch (Exception e) {}
 		}
-	} //End of getOrderByClient  
+	} //End of getOrderByClient
 
 	/**
 	 * This method is used to submit an order

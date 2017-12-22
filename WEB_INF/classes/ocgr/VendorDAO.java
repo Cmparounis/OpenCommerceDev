@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class VendorDAO {
-	
+
 	/**
 	 * Default constructor
 	 */
@@ -120,7 +120,7 @@ public class VendorDAO {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String sql= "select * from ocgr_vendors where client_email=? and client_password=?;";
+		String sql= "select * from ocgr_vendors where vendor_email=? and vendor_password=?;";
 
 		DB db = new DB();
 
