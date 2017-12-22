@@ -302,8 +302,11 @@ public class ProductDAO {
 
 	public List<Product> getThreeBest(Category category) throws Exception {
 		Connection con = null;
-		String sqlquery = "SELECT ocgr_products.product_id, product_description, product_name, AVG(rating) AS Average FROM ocgr_ratings LEFT JOIN ocgr_products ON ocgr_ratings.product_id=ocgr_products.product_id GROUP BY product_id ORDER BY Average ;";
-
+		String sqlquery = "SELECT ocgr_products.product_id, product_description, product_name,ocgr_categories.category_id ,AVG(rating) AS Average \r\n" + 
+				"FROM ocgr_ratings LEFT JOIN ocgr_products ON ocgr_ratings.product_id=ocgr_products.product_id LEFT JOIN ocgr_categories \r\n" +
+				"ON ocgr_categories.category_id=ocgr_products.category_id \r\n" + 
+				"where ocgr_categories.category_id=? \r\n" + 
+				"GROUP BY product_id ORDER BY Average ;" ;
 		DB db = new DB();
 
 		List<Product> products = new ArrayList<Product>();
@@ -311,9 +314,13 @@ public class ProductDAO {
 			db.open();
 			con = db.getConnection();
 			PreparedStatement stmt = con.prepareStatement(sqlquery);
+			stmt.setString(1, category.getId() );
 			ResultSet rs = stmt.executeQuery();
-			for (int i=0; i<3 ; i++) {
+			
+			int i = 0;
+			while (rs.next() && i<3) {
 				products.add(new Product( rs.getString("product_id"), rs.getString("product_description"),rs.getString("product_name"), category ));
+				i++;
 			}
 
 			stmt.close();

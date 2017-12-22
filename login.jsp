@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="ocgr.*" %>
-<%@ page errorPage="error.jsp"%>
+
 
 <% 
 String username = "";
+String previousPage = "";
 
-if (request.getAttribute("currentPage") != null) {
-	String previousPage = (String)request.getAttribute("currentPage"); 
-	request.setAttribute("currentPage", previousPage);
+if (session.getAttribute("currentPage") != null) {
+	previousPage = (String)session.getAttribute("currentPage"); 
+	session.setAttribute("currentPage", previousPage);
 }
 %>
+
+
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -42,7 +45,7 @@ if (request.getAttribute("currentPage") != null) {
 					<div class="col-md-4">
 					</div>
 					<div class="col-md-4">
-						<h1>Secure Login</h1>
+						<h1>Customer Login</h1>
 					</div>
 					<div class="col-md-4">
 					</div>
@@ -61,35 +64,10 @@ if (request.getAttribute("currentPage") != null) {
 						<h3 class="wp1"><%=(String)request.getAttribute("message") %></h3>
 					</div>
 				</div>
-				<br><br><br>
-				<div class="row">
-					<div class="row">
-						<div class="col-sm-offset-3 col-md-12">
-							<h4 id="login">Enter your </h4>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-offset-4 col-md-4">
-							<form class="wp2 animated fadeInUp" name="loginForm" method="post" action="ClientLoginController.jsp">
-								<div class="form-group">
-									<label for="inputEmail">Email address</label>
-									<input type="email" class="form-control" name="email" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email"><br>
-									<h5><small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small></h5>
-								</div>
-								<div class="form-group">
-									<label for="inputPassword">Password</label>
-									<input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
-								</div>
-								<div class="form-group">
-									<button type="submit" class="btn btn-default price">Login</button>
-									<span><a href="vendor_login.jsp">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Vendor Login</a></span>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>	
-				<% } else {%>
-			
+				<br><br><br>				
+			<% 
+				} 
+			%>	
 				<div class="row">
 					<div class="col-md-6 content-left">
 						<div class="row">
@@ -134,7 +112,6 @@ if (request.getAttribute("currentPage") != null) {
 						</div>
 					</div>
 				</div>
-				<% } %>
 			</div>	
 		</section>
 	

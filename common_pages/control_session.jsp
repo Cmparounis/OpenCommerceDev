@@ -1,9 +1,7 @@
 <%@ page import="java.util.Set, java.util.HashSet" %>
 <%
-request.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
-%>
-<%=request.getAttribute("currentPage")%>
-<%	
+session.setAttribute("currentPage", request.getRequestURI().replace(request.getContextPath() + "/","") );
+
 String userType = null;
 String username = null;
 Client client = null;

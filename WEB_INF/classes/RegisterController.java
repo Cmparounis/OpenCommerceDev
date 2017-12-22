@@ -24,7 +24,6 @@ public class RegisterController extends HttpServlet {
       throws IOException, ServletException {
 
     response.setContentType("text/html; charset=utf-8");
-    PrintWriter out = new PrintWriter(response.getWriter(), true);
     HttpSession session = request.getSession(true);
      
     /*
