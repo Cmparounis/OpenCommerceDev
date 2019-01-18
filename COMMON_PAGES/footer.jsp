@@ -20,24 +20,34 @@
 			<div class="row">
 				<div class="col-md-12 footer-nav">
 					<ul class="footer-primary-nav">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="categories.html">Browse</a></li>
-						<li><a href="advanced_search.html">Advanced Search</a></li>
-						<li><a href="dashboard.html">Dashboard</a></li>
+						<li><a href="index.jsp">Home</a></li>
+						<li><a href="browse.jsp">Browse</a></li>
+						<li><a href="dashboard.jsp">Dashboard</a></li>
+						<%
+						if (session.getAttribute("user-object") == null) {
+						%>
+						<li><a href="login.jsp">Login</a></li>
+						<%
+						} else {
+						%>
+						<li><a href="logout.jsp">Logout</a></li>
+						<%
+						}
+						%>
 					</ul>
 					<ul class="footer-share">
 						<li><a href="http://tympanus.net/codrops/licensing/">Licence</a></li>
-						<li><a href="#" class="share-trigger"><i class="fa fa-share"></i>Share</a></li>
+						<li><a href="" class="share-trigger"><i class="fa fa-share"></i>Share</a></li>
 					</ul>
 					<div class="share-dropdown">
 						<ul>
-							<li><a href="#" class="share-twitter"><i class="fa fa-twitter"></i></a></li>
-							<li><a href="#" class="share-facebook"><i class="fa fa-facebook"></i></a></li>
-							<li><a href="#" class="share-linkedin"><i class="fa fa-linkedin"></i></a></li>
+							<li><a href="http://www.twitter.com" class="share-twitter"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="http://www.facebook.com" class="share-facebook"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="http://www.linkedin.com" class="share-linkedin"><i class="fa fa-linkedin"></i></a></li>
 						</ul>
 					</div>
 					<ul class="footer-secondary-nav">
-						<li><p>Â© Copyright <a href="#"><em> ismGroup42</em></a>. All rights reserved | <a href="#"><em>Terms Of Use</em></a> | <a href="#"><em>Contact</em></a></p></li>
+						<li><p>© Copyright <a href="#"><em> ismGroup42</em></a>. All rights reserved | <a href="#"><em>Terms Of Use</em></a> | <a href="#"><em>Contact</em></a></p></li>
 					</ul>
 				</div>
 			</div>
@@ -50,7 +60,7 @@
 	<script src="http://vjs.zencdn.net/5.4.6/video.min.js"></script>
 	<!-- jQuery local fallback -->
 	<script>
-	window.jQuery || document.write('<script src="js/min/jquery-1.11.2.min.js"></script>')
+	window.jQuery || document.write('<script src="js/min/jquery-1.11.2.min.js"><//script>')
 	</script>
 	<!-- JS Locals -->
 	<script src="js/min/bootstrap.min.js"></script>

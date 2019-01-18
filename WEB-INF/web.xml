@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    version="2.5">
+	
+	<!-- Application name and a short description -->
+	<display-name>Open Commerce</display-name>
+	<description>An e-commerce platform made by professionals, for professionals</description>
+
+	<!-- Set Session timeout to 30 minutes -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
+	<servlet>
+		<servlet-name>register</servlet-name>
+		<servlet-class>RegisterController</servlet-class>		
+	</servlet>
+   
+	<servlet-mapping>
+		<servlet-name>register</servlet-name>
+		<url-pattern>/RegisterController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>viewProduct</servlet-name>
+		<servlet-class>ViewProduct</servlet-class>		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>viewProduct</servlet-name>
+		<url-pattern>/ViewProduct</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>viewByCategory</servlet-name>
+		<servlet-class>ViewByCategory</servlet-class>		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>viewByCategory</servlet-name>
+		<url-pattern>/ViewByCategory</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>productController</servlet-name>
+		<servlet-class>ProductController</servlet-class>		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>productController</servlet-name>
+		<url-pattern>/ProductController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>search</servlet-name>
+		<servlet-class>Search</servlet-class>		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>search</servlet-name>
+		<url-pattern>/Search</url-pattern>
+	</servlet-mapping>
+	
+	<!--
+	<servlet>
+		<servlet-name>dashboard</servlet-name>
+		<jsp-file>/dashboard.jsp</jsp-file>		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>dashboard</servlet-name>
+		<url-pattern>/dashboard</url-pattern>
+	</servlet-mapping> -->
+	
+	<!-- error-code related error pages -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+  
+  <!-- exception-type related error pages -->
+	<error-page>
+	   <exception-type>
+	      javax.servlet.ServletException
+	   </exception-type >
+	   <location>/error.jsp</location>
+	</error-page>
+	
+	<!-- Define welcome file list -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+  
+</web-app>
+
+  
+
+ 

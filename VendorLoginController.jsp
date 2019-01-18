@@ -3,10 +3,13 @@
 <%@ page errorPage="error.jsp"%>
 
 <%
-String email = request.getParameter("email");
-String password = request.getParameter("password");
+String email = (String)request.getParameter("email");
+String password = (String)request.getParameter("password");
+String categ = (String)session.getAttribute("cat_id");
+String product = (String)session.getAttribute("prod_id");
+String search_input = (String)session.getAttribute("search_entry");
 
-VendorDao vdao = new VendorDao();
+VendorDAO vdao = new VendorDAO();
 
 try {
 	vdao.authenticate(email, password);
@@ -20,5 +23,34 @@ try {
 
 session.setAttribute( "user-object", vdao.findVendor( email, password) );
 session.setAttribute( "user-type", "vendor" );
+
+if (session.getAttribute("currentPage") == null ) {
+%>
+	<jsp:forward page="dashboard.jsp"/>
+<%	
+} else {	
+	String previousPage = (String)session.getAttribute("currentPage");
+	if (previousPage.equals("ViewByCategory")){
 %>	
-<jsp:forward page= "<%= request.getAttribute("currentPage") %>"/>
+		<jsp:forward page="<%=previousPage%>">
+		<jsp:param name="cat_id" value="<%=categ%>"/>
+		</jsp:forward>
+	<%	
+	}else if (previousPage.equals("ViewProduct")) {
+	%>
+		<jsp:forward page="<%=previousPage%>">
+		<jsp:param name="prod_id" value="<%=product%>"/>
+		</jsp:forward>
+	<%	
+	}else if (previousPage.equals("Search")) {
+	%>
+		<jsp:forward page="<%=previousPage%>">
+		<jsp:param name="search_entry" value="<%=search_input%>"/>
+		</jsp:forward>
+	<%
+	}
+	%>
+	<jsp:forward page="<%=previousPage%>"/>
+<%	
+}
+%>
